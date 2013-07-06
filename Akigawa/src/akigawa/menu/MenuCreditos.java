@@ -30,7 +30,6 @@ public class MenuCreditos extends AkigawaBackMenu{
 
 	public MenuCreditos(int w, int h){
 		super(w,h);
-		botaoVoltar.addAction(GUIEvent.MOUSE_LEFT_BUTTON_DOWN, new GUIAction(this, "back"));
 	}
 
 	public void load(){

@@ -1,104 +1,46 @@
 package akigawa.menu;
 
 
-import etyllica.camada.Camada;
-import etyllica.camada.CamadaEstatica;
-import etyllica.gui.Botao;
-import etyllica.nucleo.Gerenciador;
+import br.com.etyllica.core.video.Grafico;
+import br.com.etyllica.layer.ImageLayer;
 
 
-public class MenuProcurarSala extends MenuAkigawa{
+public class MenuProcurarSala extends AkigawaBackMenu{
 
-	//id = 11	
+	private ImageLayer kanji;
+	private ImageLayer botaoTitulo;
+	private ImageLayer tituloLabel;
 
-	private Camada kanji;
-	private Camada botaoTitulo;
-	private Camada tituloLabel;
-
-	private Botao botaoVoltar;
-	private CamadaEstatica voltar;
-	private CamadaEstatica voltarOnm;
-
-	//private Camada botaoMaps;
-	//private Camada botaoMapa[];
-	//private int numeroMapas;
+	public MenuProcurarSala(int w, int h){
+		super(w,h);
+	}
 	
-	//Labels
-	/*
-	private Camada criarSalaLabel;
-	private Camada procurarSalaLabel;
-	private Camada perfilLabel;
-	*/
-
-	//CamadaTexto t;
-	//Musica music = new Musica();
-
-	public MenuProcurarSala(Gerenciador app, int id){
-
-		super(app,id);
-
-		//carrega();
-
+	@Override
+	public void back(){
+		returnApplication = new MenuJogar(w, h);
 	}
 
-	public void carrega(){
+	public void load(){
 
-		botaoTitulo = new Camada(0,14, diretorio+"gui/"+"botaocomp.png");
-		g.centralizaX(botaoTitulo);
+		botaoTitulo = new ImageLayer(0,14, "gui/botaocomp.png");
+		botaoTitulo.centralizaX(0,w);
 
-		tituloLabel = g.novaCamada(lang+"procurarsala.png");
+		tituloLabel = new ImageLayer(lang+"procurarsala.png");
 		tituloLabel.centraliza(botaoTitulo);
 
-		kanji = new Camada(diretorio+"gui/kanji.png");
-		g.centralizaX(kanji);
+		kanji = new ImageLayer("gui/kanji.png");
+		kanji.centralizaX(0,w);
 
-		voltar = new CamadaEstatica(diretorio+"gui/voltarmini.png");
-		voltarOnm = new CamadaEstatica(diretorio+"gui/voltarminionm.png");
-		
-		botaoVoltar = new Botao(g,10,350,voltar,voltarOnm);
-		//botaoVoltar.setSom(app.getSomBeep());
-		carregando = 100;
+		loading = 100;
 		
 	}
-	public int gerencia(){
-		
-		botaoVoltar.gerencia();
+	
+	public void draw(Grafico g){
 
-		//if(botao[0].getAcionado()>0){
-		//	return 111;
-		//}
-		//else 
-			if(botaoVoltar.getAcionado()>0){
-			return id/10;
-		}
+		kanji.draw(g);
+		botaoTitulo.draw(g);
+		tituloLabel.draw(g);
 
-		return id;
-
-	}
-
-	public void desenha(){
-
-		g.desenha(kanji);
-		g.desenha(botaoTitulo);
-		g.desenha(tituloLabel);
-
-		/*
-		for(int i=0;i<numeroBotoes;i++)
-		{	
-			botao[i].desenha();
-		}
-		*/
-		
-		botaoVoltar.desenha();
-		
-		//Salas Encontradas
-		/*
-		app.desenha(botaoMaps);
-		
-		app.desenha(botaoMapa[0]);
-		app.desenha(botaoMapa[1]);
-		app.desenha(botaoMapa[2]);
-		*/
 	}
 
 }

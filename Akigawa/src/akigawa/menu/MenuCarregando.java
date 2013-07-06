@@ -1,95 +1,84 @@
 package akigawa.menu;
 
 
-import etyllica.camada.Camada;
-import etyllica.camada.CamadaAnimacao;
-import etyllica.camada.CamadaTexto;
-import etyllica.nucleo.Gerenciador;
+import br.com.etyllica.core.application.DefaultLoadApplication;
+import br.com.etyllica.core.video.Grafico;
+import br.com.etyllica.layer.AnimatedImageLayer;
+import br.com.etyllica.layer.AnimatedLayer;
+import br.com.etyllica.layer.ImageLayer;
+import br.com.etyllica.layer.TextLayer;
 
 
-public class MenuCarregando extends MenuAkigawa{
+public class MenuCarregando extends DefaultLoadApplication{
 
 	//id = Coringa
 
-	private Camada kanji;
-	private Camada carregando;
-	private CamadaAnimacao reticencias;
+	private ImageLayer kanji;
+	private ImageLayer carregando;
+	private AnimatedLayer reticencias;
 	
 	
-	private Camada barra;
-	private Camada barraFill;
+	private ImageLayer barra;
+	private ImageLayer barraFill;
 	
-	private CamadaTexto text;
-	private CamadaTexto porcent;
+	private TextLayer text;
+	private TextLayer porcent;
 
-	public MenuCarregando(Gerenciador app, int id){
-
-		super(app,id);
-		//Só o MenuCarregando pode ser assim;
-		carrega();
+	public MenuCarregando(int w, int h){
+		super(w,h);	
 
 	}
 
 	public void carrega(){
 		
-		kanji = new Camada(diretorio+"gui/kanji.png");
+		kanji = new ImageLayer("gui/kanji.png");
 		g.centralizaX(kanji);
 		
-		carregando = new Camada(lang+"carregando.png");		
-		g.centralizaX(carregando);
-		g.centralizaY(carregando);
+		carregando = new ImageLayer(lang+"carregando.png");
+		carregando.centraliza(x, y, w, h);
 
-		reticencias = new CamadaAnimacao(520,220,38,12);
-		reticencias.igualaImagem("imagens/gui/carregando/3pontos.png");
+		reticencias = new AnimatedLayer(520,220,38,12);
+		reticencias.cloneLayer("imagens/gui/carregando/3pontos.png");
 		reticencias.setAnimaEmX(true);
 		reticencias.setNumeroFrames(3);
 		reticencias.anima();
 		
-		barra = new Camada("imagens/gui/barra.png");
-		g.centralizaX(barra);
+		barra = new ImageLayer("gui/barra.png");
+		barra.centralizaX(0,w);
 		barra.setY(320);
 		
-		barraFill = new Camada("imagens/gui/barrafill.png");		
-		g.centralizaX(barraFill);
+		barraFill = new ImageLayer("gui/barrafill.png");		
+		barraFill.centralizaX(0,w);
 		barraFill.setY(320);
 		//barraFill.setXImagem(400);
 		
-		porcent = new CamadaTexto(200,200,"666");
+		porcent = new TextLayer(200,200,"666");
 		porcent.setCorDifusa(0xff,0xff,0xff);
 		porcent.setTexto("100%");
-		g.centralizaX(porcent);
+		porcent.centralizaX(0,w);
 		
-		text = new CamadaTexto(200,280,"Carregando Imagens");
-		g.centralizaX(text);
+		text = new TextLayer(200,280,"Carregando Imagens");
+		text.centralizaX(0,w);
 		
 	}
 
-	public int gerencia(){
+	public void draw(Grafico g){
+
+		kanji.draw(g);
 		
-		return id;
-
-	}
-
-	public void desenha(){
-
-		g.desenha(kanji);
+		carregando.draw(g);
+		reticencias.draw(g);
 		
-		g.desenha(carregando);
-		g.desenha(reticencias);
 			
-		g.desenha(barra);
-		g.desenha(barraFill);
+		barra.draw(g);
+		barraFill.draw(g);
 		
-		g.desenha(porcent);
+		porcent.draw(g);
 	}
 
-	public void setId(int id){
-		this.id = id;
-	}
-	
 	public void setText(int andamento){
 		porcent.setTexto(Integer.toString(andamento)+"%");
 		porcent.centraliza(barra);
-		barraFill.setXImagem(barraFill.getXLimite()-andamento*4);
+		barraFill.setXImage(barraFill.getW()-andamento*4);
 	}
 }

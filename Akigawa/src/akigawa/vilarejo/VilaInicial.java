@@ -1,70 +1,77 @@
 package akigawa.vilarejo;
 
-import etyllica.camada.Camada;
-import etyllica.camada.CamadaTexto;
-import etyllica.nucleo.Gerenciador;
-import etyllica.nucleo.TSe.Tecla;
 import akigawa.fase.Fase;
+import br.com.etyllica.core.event.GUIEvent;
+import br.com.etyllica.core.event.PointerEvent;
+import br.com.etyllica.core.event.Tecla;
+import br.com.etyllica.core.video.Grafico;
+import br.com.etyllica.layer.ImageLayer;
+import br.com.etyllica.layer.TextLayer;
 
 
 public class VilaInicial extends Fase{
 
-	private Camada fundo;
-	private Camada guarda;
-	private Camada barqueiro;
-	private Camada ferreiro;
+	private ImageLayer fundo;
+	private ImageLayer guarda;
+	private ImageLayer barqueiro;
+	private ImageLayer ferreiro;
 
-	private Camada alfaiate;
+	private ImageLayer alfaiate;
 
-	private Camada alvo;
+	private ImageLayer alvo;
 
 	//Nome Mouse
-	private CamadaTexto target;
+	private TextLayer target;
 
 
-	public VilaInicial(Gerenciador app, int id) {
-		super(app, id);
-		// TODO Auto-generated constructor stub
+	public VilaInicial(int w, int h) {
+		super(w, h);
 	}
-	public void carrega() {
+	
+	public void load() {
 
-		fundo = new Camada(g.carregaCamada(diretorioFase+"vilainicial/vila.png"));
+		fundo = new ImageLayer(diretorioFase+"vilainicial/vila.png");
 
-		guarda = new Camada(g.carregaCamada(diretorioFase+"vilainicial/minigatevect.png"));
+		guarda = new ImageLayer(diretorioFase+"vilainicial/minigatevect.png");
 		guarda.setCoordenadas(356,80);
 
 		//
-		barqueiro = new Camada(g.carregaCamada(diretorioFase+"vilainicial/ocasa.png"));
+		barqueiro = new ImageLayer(diretorioFase+"vilainicial/ocasa.png");
 		barqueiro.setCoordenadas(170,240);
 
-		ferreiro = new Camada(g.carregaCamada(diretorioFase+"vilainicial/fcasa.png"));
+		ferreiro = new ImageLayer(diretorioFase+"vilainicial/fcasa.png");
 		ferreiro.setCoordenadas(260,180);
 
-		alfaiate = new Camada(g.carregaCamada(diretorioFase+"vilainicial/rcasa.png"));
+		alfaiate = new ImageLayer(diretorioFase+"vilainicial/rcasa.png");
 		alfaiate.setCoordenadas(540,250);
-		
-		alvo = new Camada(g.carregaCamada(diretorioFase+"vilainicial/alvo.png"));
+
+		alvo = new ImageLayer(diretorioFase+"vilainicial/alvo.png");
 		alvo.setCoordenadas(520,140);
 
-		target = new CamadaTexto("");
-		target.setCorDifusa(0xff,0xff,0xff);
+		target = new TextLayer("");
+		//target.setCorDifusa(0xff,0xff,0xff);
 
 
-		carregando = 100;
+		loading = 100;
 	}
-	public void desenha() {
-		g.desenha(fundo);
-		g.desenha(guarda);
-		g.desenha(barqueiro);
-		g.desenha(ferreiro);
+	public void draw (Grafico g) {
 
-		g.desenha(alfaiate);
-		g.desenha(alvo);
+		fundo.draw(g);
+		guarda.draw(g);
+		barqueiro.draw(g);
+		ferreiro.draw(g);
 
-		g.desenha(target);
+		alfaiate.draw(g);
+		alvo.draw(g);
+
+		//target.draw(g);
+
 
 	}
-	public int gerencia(){
+	/*
+
+	@Override
+	public GUIEvent updateMouse(PointerEvent event){
 
 
 		if(mouse.sobMouse(guarda)){
@@ -113,8 +120,8 @@ public class VilaInicial extends Fase{
 			target.setAparecendo(false);
 		}
 
-		//E se não sumir?
-		//Se eu ficar puto, eu faço na mão :D
+		//E se nï¿½o sumir?
+		//Se eu ficar puto, eu faï¿½o na mï¿½o :D
 			if(teclado.getTecla(Tecla.TSK_M)){
 					//camp.requestFocus();
 				//	camp.setText("");
@@ -125,28 +132,10 @@ public class VilaInicial extends Fase{
 				//camp.setText("");
 				//return 999;
 			}
-		/*
-		if(teclado.getTecla(Tecla.TSK_ENTER)){
-			if(!trava){
-				if(camp.isVisible()){
-					camp.setText("");
-					camp.setFocusable(false);
-					camp.setVisible(false);
-				}				
-				else{
-					camp.setVisible(true);
-					camp.requestFocus();
-				}
-
-				trava = true; 
-			}
-		}
-		else{
-			trava = false;
-		}
-		 */
 
 		return id;
 	}
+
+	 */
 
 }

@@ -1,29 +1,29 @@
 package akigawa.jogador;
 
 
-import java.awt.Image;
+import br.com.etyllica.layer.StaticLayer;
 
 public class Sprite{
 	
-	//Parado, Andando, Lançando shuriken...
+	//Parado, Andando, Lanï¿½ando shuriken...
 	
-	private Image pele;
-	private Image kimono;
-	private Image sombra;
+	private StaticLayer pele;
+	private StaticLayer kimono;
+	private StaticLayer sombra;
 	
-	public Sprite(Image pele, Image kimono, Image sombra){
+	public Sprite(StaticLayer pele, StaticLayer kimono, StaticLayer sombra){
 		this.pele = pele;
 		this.kimono = kimono;
 		this.sombra = sombra;
 	}
 	
-	public Image getPele(){
+	public StaticLayer getPele(){
 		return pele;
 	}
-	public Image getKimono(){
+	public StaticLayer getKimono(){
 		return kimono;
 	}
-	public Image getSombra(){
+	public StaticLayer getSombra(){
 		return sombra;
 	}
 	

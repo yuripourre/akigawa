@@ -1,26 +1,21 @@
 package akigawa.menu;
 
-import etyllica.camada.Camada;
-import etyllica.camada.CamadaEstatica;
-import etyllica.gui.Botao;
-import etyllica.nucleo.Gerenciador;
+import br.com.etyllica.core.video.Grafico;
+import br.com.etyllica.layer.ImageLayer;
 
 
 
-public class MenuCriarAventura extends MenuAkigawa{
+public class MenuCriarAventura extends AkigawaBackMenu{
 
 	//id = 11
 
-	private Camada kanji;
-	private Camada botaoTitulo;
-	private Camada tituloLabel;
+	private ImageLayer kanji;
+	private ImageLayer botaoTitulo;
+	private ImageLayer tituloLabel;
 
 
-	private Botao botaoVoltar;
-	private CamadaEstatica voltar;
-	private CamadaEstatica voltarOnm;
-
-	private Camada botaoMaps;
+	
+	private ImageLayer botaoMaps;
 	
 	//Labels
 	/*
@@ -32,69 +27,40 @@ public class MenuCriarAventura extends MenuAkigawa{
 	//CamadaTexto t;
 	//Musica music = new Musica();
 
-	public MenuCriarAventura(Gerenciador app, int id){
+	public MenuCriarAventura(int w, int h){
 
-		super(app,id);
+		super(w,h);
 
-		//carrega();
 
 	}
 
-	public void carrega(){
+	public void load(){
 
-		botaoTitulo = new Camada(0,18,diretorio+"gui/"+"botaocomp.png");
-		g.centralizaX(botaoTitulo);
+		botaoTitulo = new ImageLayer(0,18,"gui/"+"botaocomp.png");
+		botaoTitulo.centralizaX(0,w);
 
-		tituloLabel = new Camada(g.carregaCamada(lang+"criarsala.png"));
+		tituloLabel = new ImageLayer(lang+"criarsala.png");
 		tituloLabel.centraliza(botaoTitulo);
 
-		kanji = new Camada(diretorio+"gui/kanji.png");
-		kanji.centralizaX(0,largura);
+		kanji = new ImageLayer("gui/kanji.png");
+		kanji.centralizaX(0,w);
 		kanji.setY(16);
 
-		voltar = new CamadaEstatica(diretorio+"gui/voltar.png");
-		voltarOnm = new CamadaEstatica(diretorio+"gui/voltarOnm.png");		
-		
-		botaoVoltar = new Botao(g,30,262,voltar,voltarOnm);
-		
-		botaoMaps = g.novaCamada(diretorio+"gui/botaomaps.png");
+		botaoMaps = new ImageLayer("gui/botaomaps.png");
 		botaoMaps.centralizaY(botaoVoltar);
 		botaoMaps.setX(150);
 		
-		carregando = 100;
+		loading = 100;
 		
 	}
-	public int gerencia(){
-		
-		botaoVoltar.gerencia();
+	
+	public void draw(Grafico g){
 
-		//if(botao[0].getAcionado()>0){
-		//	return 111;
-		//}
-		//else 
-			if(botaoVoltar.getAcionado()>0){
-			return id/10;
-		}
+		kanji.draw(g);
+		botaoTitulo.draw(g);
+		tituloLabel.draw(g);
 
-		return id;
-
-	}
-
-	public void desenha(){
-
-		g.desenha(kanji);
-		g.desenha(botaoTitulo);
-		g.desenha(tituloLabel);
-
-		/*
-		for(int i=0;i<numeroBotoes;i++)
-		{	
-			botao[i].desenha();
-		}
-		*/
-		
-		botaoVoltar.desenha();
-		g.desenha(botaoMaps);
+		botaoMaps.draw(g);
 	}
 
 }

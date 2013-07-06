@@ -6,19 +6,19 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Timer;
 
-import etyllica.camada.CamadaEstatica;
-import etyllica.camada.CamadaMovel;
+import br.com.etyllica.layer.MovementedLayer;
+import br.com.etyllica.layer.StaticLayer;
 
 
-public class Inimigo extends CamadaMovel{
+public class Inimigo extends MovementedLayer{
 
 	private Estado estado;
 	private Direcao direcao;
 
-	private CamadaEstatica arremessando;
-	private CamadaEstatica atacando;
-	private CamadaEstatica correndo;
-	private CamadaEstatica parado;
+	private StaticLayer arremessando;
+	private StaticLayer atacando;
+	private StaticLayer correndo;
+	private StaticLayer parado;
 
 	private int velocidade;
 
@@ -40,18 +40,18 @@ public class Inimigo extends CamadaMovel{
 		yTarget = y;
 	}
 
-	public void carregaArremessando(CamadaEstatica arremessando){
+	public void carregaArremessando(StaticLayer arremessando){
 		this.arremessando = arremessando;
 
 		setArremessando();
 	}
-	public void carregaAtacando(CamadaEstatica atacando){
+	public void carregaAtacando(StaticLayer atacando){
 		this.atacando = atacando;
 	}
-	public void carregaParado(CamadaEstatica parado){
+	public void carregaParado(StaticLayer parado){
 		this.parado = parado;
 	}
-	public void carregaCorrendo(CamadaEstatica correndo){
+	public void carregaCorrendo(StaticLayer correndo){
 		this.correndo = correndo;
 
 		setCorrendo();
@@ -61,7 +61,7 @@ public class Inimigo extends CamadaMovel{
 
 		estado = Estado.ARREMESSANDO;
 
-		igualaImagem(arremessando.getCaminho());
+		cloneLayer(arremessando);
 
 		setAnimaEmX(true);
 		setNumeroFrames(5);
@@ -71,7 +71,7 @@ public class Inimigo extends CamadaMovel{
 
 		estado = Estado.ATACANDO;
 		setCoordTiles(90, 91);
-		igualaImagem(atacando.getCaminho());
+		cloneLayer(atacando);
 		setAnimaEmX(true);
 		setNumeroFrames(2);
 		setVelocidadeAnimacao(20);		
@@ -80,7 +80,7 @@ public class Inimigo extends CamadaMovel{
 
 		estado = Estado.PARADO;
 		setCoordTiles(64, 91);
-		igualaImagem(parado.getCaminho());
+		cloneLayer(parado);
 		setAnimaEmX(true);
 		setNumeroFrames(1);
 		setVelocidadeAnimacao(20);		
@@ -92,7 +92,7 @@ public class Inimigo extends CamadaMovel{
 			//Calculado Automaticamente
 			setCoordTiles(64, 100);
 
-			igualaImagem(correndo.getCaminho());
+			cloneLayer(correndo);
 			setAnimaEmX(true);
 			setNumeroFrames(7);
 			setVelocidadeAnimacao(80);
@@ -146,11 +146,11 @@ public class Inimigo extends CamadaMovel{
 			break;
 		case LESTE:
 			incrementoX = +velocidade;
-			setYImagem(0);
+			setYImage(0);
 			break;
 		case OESTE:
 			incrementoX = -velocidade;
-			setYImagem(yTile);
+			setYImage(yTile);
 			break;
 		case CENTROX:
 			incrementoX = 0;
@@ -268,7 +268,7 @@ public class Inimigo extends CamadaMovel{
 	private void gerencia(){
 
 		
-		if(target.getX()>x+xLimite)
+		if(target.getX()>x+w)
 			acao = 0;
 		//if(!colideRetangular(target)){
 		//	acao = 0;

@@ -23,6 +23,7 @@ public abstract class AkigawaBackMenu extends MenuAkigawa{
 		voltarOnm = new StaticLayer("gui/voltarminionm.png");
 
 		botaoVoltar = new ImageButton(10,350,voltar,voltarOnm);
+		botaoVoltar.addAction(GUIEvent.MOUSE_LEFT_BUTTON_DOWN, new GUIAction(this, "back"));
 		add(botaoVoltar);
 
 	}

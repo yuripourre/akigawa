@@ -1,10 +1,10 @@
 package akigawa.jogador;
 
-import etyllica.camada.CamadaAnimacao;
-import etyllica.camada.CamadaMovel;
+import br.com.etyllica.layer.AnimatedImageLayer;
+import br.com.etyllica.layer.MovementedLayer;
 
 
-public class Jogador extends CamadaMovel{
+public class Jogador extends MovementedLayer{
 
 	private Estado estado;
 	private Direcao direcao;
@@ -80,11 +80,11 @@ public class Jogador extends CamadaMovel{
 			break;
 		case LESTE:
 			incrementoX = +velocidade;
-			setYImagem(0);
+			setYImage(0);
 			break;
 		case OESTE:
 			incrementoX = -velocidade;
-			setYImagem(yTile);
+			setYImage(yTile);
 			break;
 		case CENTROX:
 			incrementoX = 0;
@@ -102,29 +102,29 @@ public class Jogador extends CamadaMovel{
 		anima();
 	}
 
-	public CamadaAnimacao getPele(){
+	public AnimatedImageLayer getPele(){
 
 		Sprite s = state();
 
-		igualaImagem(s.getPele());
+		cloneLayer(s.getPele());
 
-		return (CamadaAnimacao) this;
+		return (AnimatedImageLayer) this;
 	}
-	public CamadaAnimacao getKimono(){
+	public AnimatedImageLayer getKimono(){
 
 		Sprite s = state();
 
-		igualaImagem(s.getKimono());
+		cloneLayer(s.getKimono());
 
-		return (CamadaAnimacao) this;
+		return (AnimatedImageLayer) this;
 
 	}
-	public CamadaAnimacao getSombra(){
+	public AnimatedImageLayer getSombra(){
 
 		Sprite s = state();
 
-		igualaImagem(s.getSombra());
-		return (CamadaAnimacao) this;
+		cloneLayer(s.getSombra());
+		return (AnimatedImageLayer) this;
 	}
 
 	private Sprite state(){

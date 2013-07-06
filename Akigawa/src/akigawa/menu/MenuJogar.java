@@ -71,11 +71,23 @@ public class MenuJogar extends AkigawaBackMenu{
 		}
 
 		botao[0].setLabel(criarSalaLabel);
+		botao[0].addAction(GUIEvent.MOUSE_LEFT_BUTTON_DOWN, new GUIAction(this, "showCreateRoom"));
+		
 		botao[1].setLabel(procurarSalaLabel);
+		botao[1].addAction(GUIEvent.MOUSE_LEFT_BUTTON_DOWN, new GUIAction(this, "showFindRoom"));
+		
 		botao[2].setLabel(perfilLabel);
 	
 		loading = 100;
 
+	}
+	
+	public void showCreateRoom(){
+		this.returnApplication = new MenuCriarSala(w,h);
+	}
+	
+	public void showFindRoom(){
+		this.returnApplication = new MenuProcurarSala(w,h);
 	}
 
 	public void draw(Grafico g){
