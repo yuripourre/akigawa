@@ -1,7 +1,7 @@
 import akigawa.menu.MenuInicial;
 import br.com.etyllica.Etyllica;
 import br.com.etyllica.core.Configuration;
-import br.com.etyllica.core.control.mouse.arrow.CustomMouseArrow;
+import br.com.etyllica.gui.mouse.arrow.CustomMouseArrow;
 
 public class Akigawa extends Etyllica{
 	

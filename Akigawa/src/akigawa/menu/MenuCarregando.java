@@ -10,15 +10,13 @@ import br.com.etyllica.layer.TextLayer;
 
 public class MenuCarregando extends DefaultLoadApplication{
 
-	//id = Coringa
-
 	private ImageLayer kanji;
 	private ImageLayer carregando;
 	private AnimatedLayer reticencias;
 	
 	
-	private ImageLayer barra;
-	private ImageLayer barraFill;
+	private ImageLayer bar;
+	private ImageLayer barFill;
 	
 	private TextLayer text;
 	private TextLayer porcent;
@@ -43,18 +41,18 @@ public class MenuCarregando extends DefaultLoadApplication{
 		reticencias.setNumeroFrames(3);
 		reticencias.anima();
 		
-		barra = new ImageLayer("gui/barra.png");
-		barra.centralizaX(0,w);
-		barra.setY(320);
+		bar = new ImageLayer("gui/barra.png");
+		bar.centralizaX(0,w);
+		bar.setY(320);
 		
-		barraFill = new ImageLayer("gui/barrafill.png");		
-		barraFill.centralizaX(0,w);
-		barraFill.setY(320);
+		barFill = new ImageLayer("gui/barrafill.png");		
+		barFill.centralizaX(0,w);
+		barFill.setY(320);
 		//barraFill.setXImagem(400);
 		
 		porcent = new TextLayer(200,200,"666");
-		porcent.setCorDifusa(0xff,0xff,0xff);
-		porcent.setTexto("100%");
+		porcent.setColor(0xff,0xff,0xff);
+		porcent.setText("100%");
 		porcent.centralizaX(0,w);
 		
 		text = new TextLayer(200,280,"Carregando Imagens");
@@ -70,15 +68,15 @@ public class MenuCarregando extends DefaultLoadApplication{
 		reticencias.draw(g);
 		
 			
-		barra.draw(g);
-		barraFill.draw(g);
+		bar.draw(g);
+		barFill.draw(g);
 		
 		porcent.draw(g);
 	}
 
 	public void setText(int andamento){
-		porcent.setTexto(Integer.toString(andamento)+"%");
-		porcent.centraliza(barra);
-		barraFill.setXImage(barraFill.getW()-andamento*4);
+		porcent.setText(Integer.toString(andamento)+"%");
+		porcent.centraliza(bar);
+		barFill.setXImage(barFill.getW()-andamento*4);
 	}
 }

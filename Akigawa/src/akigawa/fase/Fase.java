@@ -3,7 +3,6 @@ package akigawa.fase;
 
 import akigawa.jogador.Sprite;
 import akigawa.menu.MenuAkigawa;
-import akigawa.model.Profile;
 import br.com.etyllica.layer.BufferedLayer;
 import br.com.etyllica.layer.ImageLayer;
 import br.com.etyllica.layer.StaticLayer;
@@ -24,8 +23,6 @@ public abstract class Fase extends MenuAkigawa{
 	protected ImageLayer pele;
 	protected BufferedLayer kimono;
 	protected BufferedLayer sombra;
-
-	protected Profile p;
 	
 	public Fase(int w, int h) {
 		super(w, h);

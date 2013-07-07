@@ -14,7 +14,6 @@ public abstract class AkigawaBackMenu extends MenuAkigawa{
 	private StaticLayer voltar;
 	private StaticLayer voltarOnm;
 
-
 	public AkigawaBackMenu(int w, int h){
 
 		super(w,h);

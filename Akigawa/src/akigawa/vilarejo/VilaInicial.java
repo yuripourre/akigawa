@@ -1,27 +1,31 @@
 package akigawa.vilarejo;
 
-import akigawa.fase.Fase;
+import java.awt.Color;
+
 import br.com.etyllica.core.event.GUIEvent;
 import br.com.etyllica.core.event.PointerEvent;
+import br.com.etyllica.core.input.mouse.MouseButton;
 import br.com.etyllica.core.video.Grafico;
 import br.com.etyllica.layer.ImageLayer;
 import br.com.etyllica.layer.TextLayer;
 
 
-public class VilaInicial extends Fase{
+public class VilaInicial extends Village{
 
-	private ImageLayer fundo;
-	private ImageLayer guarda;
-	private ImageLayer barqueiro;
-	private ImageLayer ferreiro;
-
-	private ImageLayer alfaiate;
+	private ImageLayer background;
+	
+	private ImageLayer guardLayer;
+	private ImageLayer boatmanLayer;
+	private ImageLayer blacksmithLayer;
+	private ImageLayer seamstressLayer;
 
 	private ImageLayer alvo;
+	
+	private Estabelecimento boatman;
+	private Estabelecimento seamstress;
 
 	//Nome Mouse
 	private TextLayer target;
-
 
 	public VilaInicial(int w, int h) {
 		super(w, h);
@@ -29,38 +33,43 @@ public class VilaInicial extends Fase{
 	
 	public void load() {
 
-		fundo = new ImageLayer(diretorioFase+"vilainicial/vila.png");
+		background = new ImageLayer(diretorioFase+"vilainicial/vila.png");
 
-		guarda = new ImageLayer(diretorioFase+"vilainicial/minigatevect.png");
-		guarda.setCoordenadas(356,80);
+		guardLayer = new ImageLayer(diretorioFase+"vilainicial/minigatevect.png");
+		guardLayer.setCoordenadas(356,80);
 
 		//
-		barqueiro = new ImageLayer(diretorioFase+"vilainicial/ocasa.png");
-		barqueiro.setCoordenadas(170,240);
+		boatmanLayer = new ImageLayer(diretorioFase+"vilainicial/ocasa.png");
+		boatmanLayer.setCoordenadas(170,240);
 
-		ferreiro = new ImageLayer(diretorioFase+"vilainicial/fcasa.png");
-		ferreiro.setCoordenadas(260,180);
+		blacksmithLayer = new ImageLayer(diretorioFase+"vilainicial/fcasa.png");
+		blacksmithLayer.setCoordenadas(260,180);
 
-		alfaiate = new ImageLayer(diretorioFase+"vilainicial/rcasa.png");
-		alfaiate.setCoordenadas(540,250);
+		seamstressLayer = new ImageLayer(diretorioFase+"vilainicial/rcasa.png");
+		seamstressLayer.setCoordenadas(540,250);
 
 		alvo = new ImageLayer(diretorioFase+"vilainicial/alvo.png");
 		alvo.setCoordenadas(520,140);
 
 		target = new TextLayer("");
-		//target.setCorDifusa(0xff,0xff,0xff);
+		target.setBorder(true);
+		target.setBorderColor(Color.BLACK);
+		target.setBorderWidth(4f);
 
+		//Estabelecimentos
+		boatman = new Boatman(w,h,this);
+		seamstress = new Seamstress(w,h,this);
 
 		loading = 100;
 	}
 	public void draw (Grafico g) {
 
-		fundo.draw(g);
-		guarda.draw(g);
-		barqueiro.draw(g);
-		ferreiro.draw(g);
+		background.draw(g);
+		guardLayer.draw(g);
+		boatmanLayer.draw(g);
+		blacksmithLayer.draw(g);
 
-		alfaiate.draw(g);
+		seamstressLayer.draw(g);
 		alvo.draw(g);
 
 		target.draw(g);
@@ -72,20 +81,34 @@ public class VilaInicial extends Fase{
 		
 		boolean overSomething = false;
 		
-		if(guarda.onMouse(event)){
-			target.setTexto("Guarda");
+		if(guardLayer.onMouse(event)){
+			target.setText("Guarda");
 			overSomething = true;
-		}else if(barqueiro.onMouse(event)){
-			target.setTexto("Barqueiro");
+		}else if(boatmanLayer.onMouse(event)){
+			
+			target.setText("Barqueiro");
 			overSomething = true;
-		}else if(ferreiro.onMouse(event)){
-			target.setTexto("Ferreiro");
+			
+			if(event.getPressed(MouseButton.MOUSE_BUTTON_LEFT)){
+				returnApplication = boatman;
+			}
+			
+		}else if(blacksmithLayer.onMouse(event)){
+			
+			target.setText("Ferreiro");
 			overSomething = true;
-		}else if(alfaiate.onMouse(event)){
-			target.setTexto("Alfaiate");
+			
+		}else if(seamstressLayer.onMouse(event)){
+			
+			target.setText("Alfaiate");
 			overSomething = true;
+			
+			if(event.getPressed(MouseButton.MOUSE_BUTTON_LEFT)){
+				returnApplication = seamstress;
+			}
+			
 		}else if(alvo.onMouse(event)){
-			target.setTexto("Alvo");
+			target.setText("Alvo");
 			overSomething = true;
 		}else{
 			target.setVisible(false);
@@ -94,10 +117,9 @@ public class VilaInicial extends Fase{
 		
 		
 		if(overSomething){			
-			target.setCoordenadas(event.getX()-50, event.getY()-40);
+			target.setCoordenadas(event.getX()-50, event.getY());
 			target.setVisible(true);
-		}
-		
+		}		
 		
 		return GUIEvent.NONE;
 

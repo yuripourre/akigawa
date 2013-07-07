@@ -1,15 +1,18 @@
 package akigawa.vilarejo;
 
-import etyllica.nucleo.Gerenciador;
-import akigawa.fase.Fase;
+import akigawa.menu.AkigawaBackMenu;
 
-public abstract class Estabelecimento extends Fase{
+public abstract class Estabelecimento extends AkigawaBackMenu{
+		
+	protected Village village;
 	
-	int vila;
-	
-	public Estabelecimento(Gerenciador app, int id, int vila) {
-		super(app, id);
-		this.vila = vila;
+	public Estabelecimento(int w, int h, Village village) {
+		super(w, h);
+		
+		this.village = village;
 	}
 	
+	public void back(){
+		returnApplication = village;
+	}
 }
