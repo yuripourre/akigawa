@@ -1,6 +1,8 @@
 package akigawa.vilarejo;
 
 import akigawa.fase.Fase;
+import br.com.etyllica.core.event.GUIEvent;
+import br.com.etyllica.core.event.PointerEvent;
 import br.com.etyllica.core.video.Grafico;
 import br.com.etyllica.layer.ImageLayer;
 import br.com.etyllica.layer.TextLayer;
@@ -61,78 +63,46 @@ public class VilaInicial extends Fase{
 		alfaiate.draw(g);
 		alvo.draw(g);
 
-		//target.draw(g);
-
+		target.draw(g);
 
 	}
-	/*
-
+	
 	@Override
 	public GUIEvent updateMouse(PointerEvent event){
-
-
-		if(mouse.sobMouse(guarda)){
+		
+		boolean overSomething = false;
+		
+		if(guarda.onMouse(event)){
 			target.setTexto("Guarda");
-			target.setCoordenadas(mouse.getX()-50, mouse.getY()-40);
-			target.setAparecendo(true);
-			if(mouse.getPressionado()==1){
-				return 13;
-			}
-		}
-		else if(mouse.sobMouse(barqueiro)){
+			overSomething = true;
+		}else if(barqueiro.onMouse(event)){
 			target.setTexto("Barqueiro");
-			target.setCoordenadas(mouse.getX()-50, mouse.getY()-40);
-			target.setAparecendo(true);
-			if(mouse.getPressionado()==1){
-				return 16;
-			}
-		}
-		else if(mouse.sobMouse(ferreiro)){
+			overSomething = true;
+		}else if(ferreiro.onMouse(event)){
 			target.setTexto("Ferreiro");
-			target.setCoordenadas(mouse.getX()-50, mouse.getY()-40);
-			target.setAparecendo(true);
-			if(mouse.getPressionado()==1){
-				return 12;
-			}
+			overSomething = true;
+		}else if(alfaiate.onMouse(event)){
+			target.setTexto("Alfaiate");
+			overSomething = true;
+		}else if(alvo.onMouse(event)){
+			target.setTexto("Alvo");
+			overSomething = true;
+		}else{
+			target.setVisible(false);
+			return GUIEvent.NONE;
 		}
-		else if(mouse.sobMouse(alfaiate)){
-			target.setTexto("Rouparia");
-			target.setCoordenadas(mouse.getX()-50, mouse.getY()-40);
-			target.setAparecendo(true);
-			if(mouse.getPressionado()==1){
-				//return 999;
-				return 15;
-			}
+		
+		
+		if(overSomething){			
+			target.setCoordenadas(event.getX()-50, event.getY()-40);
+			target.setVisible(true);
 		}
-		else if(mouse.sobMouse(alvo)){
-			target.setTexto("Tiro ao Alvo");
-			target.setCoordenadas(mouse.getX()-50, mouse.getY()-40);
-			target.setAparecendo(true);
+		
+		
+		return GUIEvent.NONE;
 
-			if(mouse.getPressionado()==1){
-				return 14;
-			}
-		}
-		else{
-			target.setAparecendo(false);
-		}
-
-		//E se n�o sumir?
-		//Se eu ficar puto, eu fa�o na m�o :D
-			if(teclado.getTecla(Tecla.TSK_M)){
-					//camp.requestFocus();
-				//	camp.setText("");
-				//}
-				//travaEnter = true;
-			}
-			if(teclado.getTecla(Tecla.TSK_N)){
-				//camp.setText("");
-				//return 999;
-			}
-
-		return id;
 	}
 
-	 */
+	 
 
 }

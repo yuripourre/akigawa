@@ -19,9 +19,9 @@ public class MenuInicial extends MenuAkigawa{
 	private StaticLayer botaoNormal;
 	private StaticLayer botaoOnm;
 
-	private int numeroBotoes = 3;
+	private final int numeroBotoes = 3;
 
-	private ImageButton botao[] = new ImageButton[numeroBotoes];	
+	private ImageButton botao[] = new ImageButton[numeroBotoes];
 
 	//Labels
 	private ImageLabel jogarLabel;
