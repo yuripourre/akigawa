@@ -14,9 +14,9 @@ public abstract class MenuAkigawa extends Application{
 	protected String lang;
 
 	public MenuAkigawa(int w, int h){
-
 		super(w,h);
 		lang = "lang/br/";
+		loadApplication = new MenuCarregando(w, h);
 		
 	}
 

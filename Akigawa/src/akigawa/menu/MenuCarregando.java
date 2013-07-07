@@ -3,7 +3,6 @@ package akigawa.menu;
 
 import br.com.etyllica.core.application.DefaultLoadApplication;
 import br.com.etyllica.core.video.Grafico;
-import br.com.etyllica.layer.AnimatedImageLayer;
 import br.com.etyllica.layer.AnimatedLayer;
 import br.com.etyllica.layer.ImageLayer;
 import br.com.etyllica.layer.TextLayer;
@@ -23,22 +22,23 @@ public class MenuCarregando extends DefaultLoadApplication{
 	
 	private TextLayer text;
 	private TextLayer porcent;
+	
+	String lang = "lang/br/";
 
 	public MenuCarregando(int w, int h){
-		super(w,h);	
-
+		super(w,h);
 	}
 
-	public void carrega(){
+	public void load(){
 		
 		kanji = new ImageLayer("gui/kanji.png");
-		g.centralizaX(kanji);
+		kanji.centralizaX(0,w);
 		
 		carregando = new ImageLayer(lang+"carregando.png");
 		carregando.centraliza(x, y, w, h);
 
 		reticencias = new AnimatedLayer(520,220,38,12);
-		reticencias.cloneLayer("imagens/gui/carregando/3pontos.png");
+		reticencias.cloneLayer("gui/carregando/3pontos.png");
 		reticencias.setAnimaEmX(true);
 		reticencias.setNumeroFrames(3);
 		reticencias.anima();

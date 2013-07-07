@@ -1,6 +1,7 @@
 package akigawa.menu;
 
 
+import akigawa.vilarejo.VilaInicial;
 import br.com.etyllica.core.event.GUIAction;
 import br.com.etyllica.core.event.GUIEvent;
 import br.com.etyllica.core.video.Grafico;
@@ -11,8 +12,6 @@ import br.com.etyllica.layer.StaticLayer;
 
 
 public class MenuInicial extends MenuAkigawa{
-
-	//id = 1	
 
 	private ImageLayer kanji;
 	private ImageLayer titulo;
@@ -85,7 +84,7 @@ public class MenuInicial extends MenuAkigawa{
 	}
 	
 	public void showPlay(){
-		this.returnApplication = new MenuJogar(w,h);
+		this.returnApplication = new VilaInicial(w,h);
 	}
 	
 	public void showOptions(){

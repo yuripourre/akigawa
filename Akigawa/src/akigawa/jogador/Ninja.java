@@ -2,18 +2,17 @@ package akigawa.jogador;
 
 import java.awt.image.BufferedImage;
 
+import br.com.etyllica.layer.BufferedLayer;
+import br.com.etyllica.layer.MovementedLayer;
 
-import etyllica.camada.CamadaManipulavel;
-import etyllica.camada.CamadaMovel;
-
-public class Ninja extends CamadaMovel{
+public class Ninja extends MovementedLayer{
 
 
-	CamadaManipulavel sombra;
-	CamadaManipulavel kimono;
-	CamadaManipulavel pele;
+	BufferedLayer sombra;
+	BufferedLayer kimono;
+	BufferedLayer pele;
 
-	CamadaManipulavel cam;
+	BufferedLayer cam;
 
 	int r;
 	int g;
@@ -35,7 +34,7 @@ public class Ninja extends CamadaMovel{
 		this.g = green;
 	}
 
-	public void setNinja(CamadaManipulavel sombra, CamadaManipulavel kimono, CamadaManipulavel pele){
+	public void setNinja(BufferedLayer sombra, BufferedLayer kimono, BufferedLayer pele){
 		this.sombra = sombra;
 		this.kimono = kimono;
 		this.pele = pele;
@@ -46,18 +45,18 @@ public class Ninja extends CamadaMovel{
 		buf.getGraphics().drawImage(kimono.getImagemBuffer(),0,0,null);
 		buf.getGraphics().drawImage(pele.getImagemBuffer(),0,0,null);
 
-		cam = new CamadaManipulavel(x,y,buf);
+		cam = new BufferedLayer(x,y,buf);
 		
-		cam.setXLimite(75);
+		cam.setW(75);
 	}
 
-	public CamadaManipulavel getCamada(){
+	public BufferedLayer getCamada(){
 		return cam;
 	}
 
 	public void preAnima(){
 
-		if(!parado){
+		if(!stopped){
 			if(frameAtual < numeroFrames-1){
 
 				frameAtual++;			
@@ -67,7 +66,7 @@ public class Ninja extends CamadaMovel{
 				desAnima();
 			}
 
-			cam.setXImagem(xTile*frameAtual);
+			cam.setXImage(xTile*frameAtual);
 		}
 	}
 

@@ -1,9 +1,6 @@
 package akigawa.vilarejo;
 
 import akigawa.fase.Fase;
-import br.com.etyllica.core.event.GUIEvent;
-import br.com.etyllica.core.event.PointerEvent;
-import br.com.etyllica.core.event.Tecla;
 import br.com.etyllica.core.video.Grafico;
 import br.com.etyllica.layer.ImageLayer;
 import br.com.etyllica.layer.TextLayer;

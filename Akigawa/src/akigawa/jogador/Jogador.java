@@ -1,6 +1,6 @@
 package akigawa.jogador;
 
-import br.com.etyllica.layer.AnimatedImageLayer;
+import br.com.etyllica.layer.AnimatedLayer;
 import br.com.etyllica.layer.MovementedLayer;
 
 
@@ -102,29 +102,29 @@ public class Jogador extends MovementedLayer{
 		anima();
 	}
 
-	public AnimatedImageLayer getPele(){
+	public AnimatedLayer getPele(){
 
 		Sprite s = state();
 
 		cloneLayer(s.getPele());
 
-		return (AnimatedImageLayer) this;
+		return (AnimatedLayer) this;
 	}
-	public AnimatedImageLayer getKimono(){
+	public AnimatedLayer getKimono(){
 
 		Sprite s = state();
 
 		cloneLayer(s.getKimono());
 
-		return (AnimatedImageLayer) this;
+		return (AnimatedLayer) this;
 
 	}
-	public AnimatedImageLayer getSombra(){
+	public AnimatedLayer getSombra(){
 
 		Sprite s = state();
 
 		cloneLayer(s.getSombra());
-		return (AnimatedImageLayer) this;
+		return (AnimatedLayer) this;
 	}
 
 	private Sprite state(){

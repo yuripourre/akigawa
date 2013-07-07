@@ -1,8 +1,6 @@
 package akigawa.menu;
 
 
-import br.com.etyllica.core.event.GUIAction;
-import br.com.etyllica.core.event.GUIEvent;
 import br.com.etyllica.core.video.Grafico;
 import br.com.etyllica.layer.ImageLayer;
 

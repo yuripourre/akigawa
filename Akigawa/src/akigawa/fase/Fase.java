@@ -1,18 +1,12 @@
 package akigawa.fase;
 
 
+import akigawa.jogador.Sprite;
+import akigawa.menu.MenuAkigawa;
+import akigawa.model.Profile;
 import br.com.etyllica.layer.BufferedLayer;
 import br.com.etyllica.layer.ImageLayer;
 import br.com.etyllica.layer.StaticLayer;
-import etyllica.nucleo.Gerenciador;
-import etyllica.nucleo.Perfil;
-import etyllica.camada.Camada;
-import etyllica.camada.CamadaEstatica;
-import etyllica.camada.CamadaManipulavel;
-
-
-import akigawa.jogador.Sprite;
-import akigawa.menu.MenuAkigawa;
 
 
 public abstract class Fase extends MenuAkigawa{
@@ -31,7 +25,7 @@ public abstract class Fase extends MenuAkigawa{
 	protected BufferedLayer kimono;
 	protected BufferedLayer sombra;
 
-	protected Perfil p;
+	protected Profile p;
 	
 	public Fase(int w, int h) {
 		super(w, h);
@@ -43,7 +37,7 @@ public abstract class Fase extends MenuAkigawa{
 		//maxJogadores = app.getMaxJogadores();
 		maxJogadores = 1;
 		
-		p = app.getPerfil();
+		//p = (Profile) sessionMap.get("PROFILE");
 	}
 	
 	//public getCorrendo()...
@@ -71,21 +65,19 @@ public abstract class Fase extends MenuAkigawa{
 		aSombra.offsetRGB(red, green, blue);
 
 		//Sprite arremesso = new Sprite(aPele.getCaminho(), aKimono.getCaminho(), aSombra.getCaminho());
-		Sprite arremesso = new Sprite(g.carregaImagem(aPele.getCaminho()), aKimono.getImagemBuffer(), aSombra.getImagemBuffer());
+		Sprite arremesso = new Sprite(aPele, aKimono, aSombra);
 
 		return arremesso;
 	}
 
 	public Sprite getCorrendo(int red, int green, int blue){
 		//CamadaEstatica cPele = new CamadaEstatica(url, "imagens/jogador/correndo/pele.png");
-		StaticLayer cPele = new StaticLayer("imagens/jogador/correndo/ninja.png");
+		StaticLayer cPele = new StaticLayer("jogador/correndo/ninja.png");
 
-		CamadaManipulavel cKimono = new CamadaManipulavel(g.carregaImagem("imagens/jogador/correndo/kimono.png"));
-		cKimono.mudaAzul(blue);
-		cKimono.mudaVerde(green);
-		cKimono.mudaVermelho(red);
-
-		CamadaManipulavel cSombra = new CamadaManipulavel(g.carregaImagem("imagens/jogador/correndo/sombra.png"));
+		BufferedLayer cKimono = new BufferedLayer("jogador/correndo/kimono.png");
+		cKimono.offsetRGB(red, green, blue);
+		
+		BufferedLayer cSombra = new BufferedLayer("jogador/correndo/sombra.png");
 
 		int sombra = 40;
 
@@ -93,11 +85,9 @@ public abstract class Fase extends MenuAkigawa{
 		green -= (green*sombra)/100;
 		blue -= (blue*sombra)/100;
 
-		cSombra.mudaAzul(blue);
-		cSombra.mudaVerde(green);
-		cSombra.mudaVermelho(red);
+		cSombra.offsetRGB(red, green, blue);
 
-		Sprite correndo = new Sprite(g.carregaImagem(cPele.getCaminho()), cKimono.getImagemBuffer(), cSombra.getImagemBuffer());		
+		Sprite correndo = new Sprite(cPele, cKimono, cSombra);		
 
 		return correndo;
 	}	

@@ -1,11 +1,7 @@
 package akigawa.menu;
 
-import br.com.etyllica.core.event.GUIAction;
-import br.com.etyllica.core.event.GUIEvent;
 import br.com.etyllica.core.video.Grafico;
-import br.com.etyllica.gui.button.ImageButton;
 import br.com.etyllica.layer.ImageLayer;
-import br.com.etyllica.layer.StaticLayer;
 
 
 public class MenuCreditos extends AkigawaBackMenu{
