@@ -2,130 +2,133 @@ package akigawa.vilarejo;
 
 import java.util.ArrayList;
 
-import etyllica.camada.Camada;
-import etyllica.camada.CamadaEstatica;
-import etyllica.camada.CamadaTexto;
-import etyllica.gui.Botao;
-import etyllica.nucleo.Gerenciador;
-
-
 import akigawa.fase.Fase;
 import akigawa.vilarejo.Item.Objetos;
+import br.com.etyllica.core.graphics.Graphic;
+import br.com.etyllica.gui.Button;
+import br.com.etyllica.gui.button.ImageButton;
+import br.com.etyllica.layer.ImageLayer;
+import br.com.etyllica.layer.StaticLayer;
+import br.com.etyllica.layer.TextLayer;
 
-public class LojaMagicas extends Fase{
+public class LojaMagicas extends Fase {
 
-	private Camada fundo;
+	private ImageLayer fundo;
 
 	//Gui
-	private Camada rect;
-	private Camada build;
-	private CamadaTexto building;
+	private ImageLayer rect;
+	private ImageLayer build;
+	private TextLayer building;
 
-	private Botao[] vender;
-	private Botao[] miniBotoes;
+	private ImageButton[] vender;
+	private ImageButton[] miniBotoes;
 
-	private CamadaEstatica card;
-	private CamadaEstatica cardOnm;
-	private CamadaEstatica cardClk;
+	private StaticLayer card;
+	private StaticLayer cardOnm;
+	private StaticLayer cardClk;
 
-	private CamadaEstatica mini;
-	private CamadaEstatica miniOnm;
-	private CamadaEstatica miniAtivo;
+	private StaticLayer mini;
+	private StaticLayer miniOnm;
+	private StaticLayer miniAtivo;
 
-	private Camada minikunai;
-	private Camada minishuriken;
+	private ImageLayer minikunai;
+	private ImageLayer minishuriken;
 
-	private Botao botaoVoltar;
-	private CamadaEstatica voltar;
-	private CamadaEstatica voltarOnm;
+	private ImageButton botaoVoltar;
+	private StaticLayer voltar;
+	private StaticLayer voltarOnm;
 
 	//Estoque
 	private ArrayList<Item> estoqueMagico = new ArrayList<Item>();
 	
-	private CamadaTexto nomeItem[][];
-	private Camada miniItem;
-	private CamadaTexto quantidade[];
-	private CamadaTexto req[];
+	private TextLayer nomeItem[][];
+	private ImageLayer miniItem;
+	private TextLayer quantidade[];
+	private TextLayer req[];
 
-	public LojaMagicas(Gerenciador app, int id) {
-		super(app, id);
+	public LojaMagicas(int x, int y) {
+		super(x, y);
 	} 
 
-	public void carrega(){
+	public void load() {
 
-		voltar = new CamadaEstatica(diretorio+"gui/voltarmini.png");
-		voltarOnm = new CamadaEstatica(diretorio+"gui/voltarminionm.png");
-		botaoVoltar = new Botao(g,10,350,voltar,voltarOnm);
+		voltar = new StaticLayer(diretorio+"gui/voltarmini.png");
+		voltarOnm = new StaticLayer(diretorio+"gui/voltarminionm.png");
+		botaoVoltar = new ImageButton(10,350,voltar,voltarOnm);
+		
+		this.add(botaoVoltar);
 
 
-		fundo = new Camada(diretorioFase+"vilainicial/blacksmith.png");
-		carregando = 50;
+		fundo = new ImageLayer(diretorioFase+"vilainicial/blacksmith.png");
+		loading = 50;
 
-		rect = new Camada(diretorioFase+"vilainicial/loja/shoprect.png");
+		rect = new ImageLayer(diretorioFase+"vilainicial/loja/shoprect.png");
 		rect.setX(10);
 		rect.setY(10);
 		
-		build = new Camada(diretorioFase+"vilainicial/loja/build.png");
-		g.centralizaX(build);
+		build = new ImageLayer(diretorioFase+"vilainicial/loja/build.png");
+		build.centralizeX(0, w);
 		build.setY(350);
 		
-		building = new CamadaTexto(0,0,"Não há nada sendo construído");
-		building.setCorDifusa(0xff,0xff,0xff);
-		building.setTamanhoFonte(22);
-		building.centraliza(build);
+		building = new TextLayer(0,0,"Nï¿½o hï¿½ nada sendo construï¿½do");
+		building.setColor(0xff,0xff,0xff);
+		building.setSize(22f);
+		building.centralize(build);
 
-		card = new CamadaEstatica(diretorioFase+"vilainicial/loja/card.png");
-		cardOnm = new CamadaEstatica(diretorioFase+"vilainicial/loja/cardonm.png");
-		cardClk = new CamadaEstatica(diretorioFase+"vilainicial/loja/cardclk.png");
+		card = new StaticLayer(diretorioFase+"vilainicial/loja/card.png");
+		cardOnm = new StaticLayer(diretorioFase+"vilainicial/loja/cardonm.png");
+		cardClk = new StaticLayer(diretorioFase+"vilainicial/loja/cardclk.png");
 
-		mini = new CamadaEstatica(diretorioFase+"vilainicial/loja/minibot.png");
-		miniOnm = new CamadaEstatica(diretorioFase+"vilainicial/loja/minionm.png");
-		miniAtivo = new CamadaEstatica(diretorioFase+"vilainicial/loja/miniactive.png");		
+		mini = new StaticLayer(diretorioFase+"vilainicial/loja/minibot.png");
+		miniOnm = new StaticLayer(diretorioFase+"vilainicial/loja/minionm.png");
+		miniAtivo = new StaticLayer(diretorioFase+"vilainicial/loja/miniactive.png");		
 
 		int espacamento = 10;
 		
-		vender = new Botao[3];
-		for(int i=0;i<3;i++){
-			vender[i] = new Botao(g,103,rect.getY()+espacamento+40,card,cardOnm,cardClk);
+		vender = new ImageButton[3];
+		for(int i=0;i<3;i++) {
+			vender[i] = new ImageButton(103,rect.getY()+espacamento+40,card,cardOnm,cardClk);
+			
+			this.add(vender[i]);
 		}
 
-		vender[1].centralizaX(rect);
-		vender[0].setX(vender[1].getX()-vender[0].getXLimite()-espacamento);
-		vender[2].setX(vender[1].getX()+vender[1].getXLimite()+espacamento);
+		vender[1].centralizeX(rect);
+		vender[0].setX(vender[1].getX()-vender[0].getW()-espacamento);
+		vender[2].setX(vender[1].getX()+vender[1].getW()+espacamento);
 
 
-		miniBotoes = new Botao[2];
-		miniBotoes[0] = new Botao(g,150,260,mini,miniOnm,miniAtivo);
-		miniBotoes[1] = new Botao(g,220,260,mini,miniOnm,miniAtivo);
+		miniBotoes = new ImageButton[2];
+		miniBotoes[0] = new ImageButton(150,260,mini,miniOnm,miniAtivo);
+		miniBotoes[1] = new ImageButton(220,260,mini,miniOnm,miniAtivo);
 
-		minikunai = new Camada(diretorioFase+"vilainicial/loja/minikunai.png");
-		minikunai.centraliza(miniBotoes[0]);
+		minikunai = new ImageLayer(diretorioFase+"vilainicial/loja/minikunai.png");
+		minikunai.centralize(miniBotoes[0]);
 
-		minishuriken = new Camada(diretorioFase+"vilainicial/loja/minishuriken.png");
-		minishuriken.centraliza(miniBotoes[1]);
+		minishuriken = new ImageLayer(diretorioFase+"vilainicial/loja/minishuriken.png");
+		minishuriken.centralize(miniBotoes[1]);
 
-		CamadaEstatica pVida = new CamadaEstatica(diretorio+"loja/pvida.png");
-		CamadaEstatica pEnergia = new CamadaEstatica(diretorio+"loja/penergia.png");
+		StaticLayer pVida = new StaticLayer(diretorio+"loja/pvida.png");
+		StaticLayer pEnergia = new StaticLayer(diretorio+"loja/penergia.png");
 		estoqueMagico.add(new Item(Objetos.POCAO_VIDA,pVida));
 		estoqueMagico.add(new Item(Objetos.POCAO_ENERGIA,pEnergia));
 		
-		nomeItem = new CamadaTexto[3][3];
-		quantidade = new CamadaTexto[3];
-		req = new CamadaTexto[3];
+		nomeItem = new TextLayer[3][3];
+		quantidade = new TextLayer[3];
+		req = new TextLayer[3];
 		
 		for(int i=0;i<3;i++){
 			for(int j=0;j<3;j++){
-				nomeItem[j][i] = new CamadaTexto(0,0,"");		
+				nomeItem[j][i] = new TextLayer(0,0,"");		
 			}
-			quantidade[i] = new CamadaTexto(0,0,"");
-			req[i] = new CamadaTexto(0,0,"");
+			quantidade[i] = new TextLayer(0,0,"");
+			req[i] = new TextLayer(0,0,"");
 		}
 		
 		setItem(0,0,estoqueMagico);
 		setItem(1,1,estoqueMagico);
 		setItem(1,2,estoqueMagico);
 		
-		carregando = 100;
+		loading = 100;
 	}
 	
 	private void setItem(int itm, int a, ArrayList<Item> estoque){
@@ -135,57 +138,52 @@ public class LojaMagicas extends Fase{
 		
 		switch(estoque.get(itm).getNome().split(" ").length){
 		case 3:
-			nomeItem[2][a].setTexto(estoque.get(itm).getNome().split(" ")[2]);
-			nomeItem[2][a].setCorDifusa(0xff,0xff,0xff);
-			nomeItem[2][a].setTamanhoFonte(tamanhoFonte);
-			nomeItem[2][a].centralizaX(vender[a]);
+			nomeItem[2][a].setText(estoque.get(itm).getNome().split(" ")[2]);
+			nomeItem[2][a].setColor(0xff,0xff,0xff);
+			nomeItem[2][a].setSize(tamanhoFonte);
+			nomeItem[2][a].centralizeX(vender[a]);
 			nomeItem[2][a].setY(vender[a].getY()+offsetY+tamanhoFonte*2);			
 		case 2:
-			nomeItem[1][a].setTexto(estoque.get(itm).getNome().split(" ")[1]);
-			nomeItem[1][a].setCorDifusa(0xff,0xff,0xff);
-			nomeItem[1][a].setTamanhoFonte(tamanhoFonte);
-			nomeItem[1][a].centralizaX(vender[a]);
+			nomeItem[1][a].setText(estoque.get(itm).getNome().split(" ")[1]);
+			nomeItem[1][a].setColor(0xff,0xff,0xff);
+			nomeItem[1][a].setSize(tamanhoFonte);
+			nomeItem[1][a].centralizeX(vender[a]);
 			nomeItem[1][a].setY(vender[a].getY()+offsetY+tamanhoFonte);
 		case 1:
-		nomeItem[0][a].setTexto(estoque.get(itm).getNome().split(" ")[0]);
-		nomeItem[0][a].setCorDifusa(0xff,0xff,0xff);
-		nomeItem[0][a].setTamanhoFonte(tamanhoFonte);
-		nomeItem[0][a].centralizaX(vender[a]);
+		nomeItem[0][a].setText(estoque.get(itm).getNome().split(" ")[0]);
+		nomeItem[0][a].setColor(0xff,0xff,0xff);
+		nomeItem[0][a].setSize(tamanhoFonte);
+		nomeItem[0][a].centralizeX(vender[a]);
 		nomeItem[0][a].setY(vender[a].getY()+offsetY);
 		break;
 		}
-		quantidade[a].setTexto("x 10");
-		quantidade[a].setCorDifusa(0xff,0xff,0xff);
-		quantidade[a].setTamanhoFonte(tamanhoFonte);
+		quantidade[a].setText("x 10");
+		quantidade[a].setColor(0xff,0xff,0xff);
+		quantidade[a].setSize(tamanhoFonte);
 		quantidade[a].setY(210);
-		quantidade[a].centralizaX(vender[a]);
+		quantidade[a].centralizeX(vender[a]);
 	}
 	
-	public void desenha(){
-		g.desenha(fundo);
+	public void draw(Graphic g) {
+		fundo.draw(g);
 
-		g.desenha(rect);
-		g.desenha(build);
-		g.desenha(building);
+		rect.draw(g);
+		build.draw(g);
+		building.draw(g);
 
-		for(int i=0;i<3;i++){
-			vender[i].desenha();
-		}
+		miniBotoes[0].draw(g);
+		miniBotoes[1].draw(g);
 
-		miniBotoes[0].desenha();
-		miniBotoes[1].desenha();
-
-		g.desenha(minikunai);
-		g.desenha(minishuriken);
+		minikunai.draw(g);
+		minishuriken.draw(g);
 		
 		for(int i=0;i<3;i++){
 			for(int j=0;j<3;j++){
-				g.desenha(nomeItem[j][i]);		
+				nomeItem[j][i].draw(g);		
 			}
-			g.desenha(quantidade[i]);
+			quantidade[i].draw(g);
 		}
 
-		botaoVoltar.desenha();
 	}
 	public int gerencia(){
 
@@ -195,18 +193,16 @@ public class LojaMagicas extends Fase{
 
 			}
 		}
-		
-		
-		
+				
 		for(int i=0;i<2;i++){
 			miniBotoes[i].gerencia();
 		}
 		
 		botaoVoltar.gerencia();
+		
 		if(botaoVoltar.getAcionado()>0){
-			return 1;//Vila Inicial
+			returnApplication = new VilaInicial(w, h);//Vila Inicial
 		}
 
-		return id;
 	}
 }

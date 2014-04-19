@@ -1,12 +1,12 @@
 package akigawa.armas;
 
-import etyllica.audio.SomWav;
-import etyllica.camada.Camada;
-import etyllica.camada.CamadaEstatica;
+import sound.model.Sound;
+import br.com.etyllica.layer.ImageLayer;
+import br.com.etyllica.layer.Layer;
 
-public class Arremessavel extends Camada{
+public class Arremessavel extends ImageLayer{
 
-	private SomWav som;
+	private Sound som;
 	
 	private boolean arremessado;
 	private boolean parado;
@@ -16,12 +16,11 @@ public class Arremessavel extends Camada{
 	private int limiteMin;
 	private int xInicial;
 
-	public Arremessavel(CamadaEstatica kunai){
-		
-		super(kunai);
+	public Arremessavel(String path){
+		super(path);
 		
 		arremessado = false;
-		aparecendo = false;
+		visible = false;
 		velocidade = 1;
 		limiteMax = 780;
 		limiteMin = -20;
@@ -40,7 +39,7 @@ public class Arremessavel extends Camada{
 			xInicial = x;
 
 		if(parado){
-			aparecendo = true;
+			visible = true;
 			arremessado = true;
 			parado = false;
 		}
@@ -59,7 +58,7 @@ public class Arremessavel extends Camada{
 						setOffsetX(velocidade);
 					}
 					else{
-						aparecendo = false;
+						visible = false;
 						arremessado = false;
 						x = xInicial;
 					}
@@ -69,7 +68,7 @@ public class Arremessavel extends Camada{
 						setOffsetX(velocidade);
 					}
 					else{
-						aparecendo = false;
+						visible = false;
 						arremessado = false;
 						x = xInicial;
 					}
@@ -82,21 +81,21 @@ public class Arremessavel extends Camada{
 		return parado;
 	}
 	
-	public boolean colideRetangular(Camada b)
+	public boolean colideRetangular(Layer b)
 	{
-		if(b.getX() + b.getXLimite() < x)	return false;
-		if(b.getX() > x + xLimite)		return false;
+		if(b.getX() + b.getW() < x)	return false;
+		if(b.getX() > x + w)		return false;
 
-		if(b.getY() + b.getYLimite() < y)	return false;
-		if(b.getY() > y + yLimite)		return false;
+		if(b.getY() + b.getH() < y)	return false;
+		if(b.getY() > y + h)		return false;
 		
-		if(b.getY() + b.getYLimite() < y + yLimite/2)	return false;
-		if(b.getY() > y + yLimite - yLimite/2)		return false;
+		if(b.getY() + b.getH() < y + h/2)	return false;
+		if(b.getY() > y + h - h/2)		return false;
 
 		return true;
 	}
 	
-	public void setSom(SomWav som){
+	public void setSom(Sound som){
 		this.som = som;
 	}
 

@@ -1,14 +1,13 @@
 package akigawa.objetos;
 
 
-import etyllica.audio.SomWav;
-import etyllica.camada.Camada;
-import etyllica.camada.CamadaEstatica;
+import br.com.etyllica.layer.ImageLayer;
+import br.com.etyllica.multimedia.Sound;
 
 
 
-public class Caido extends Camada{
-	private SomWav som;
+public class Caido extends ImageLayer{
+	private Sound som;
 
 	private boolean arremessado;
 	private boolean parado;
@@ -18,26 +17,12 @@ public class Caido extends Camada{
 	private int limiteMin;
 	private int yInicial;
 
-	public Caido(CamadaEstatica camEst){
-
-		super(camEst);
-
-		parado = false;
-		arremessado = false;
-		aparecendo = true;
-		velocidade = 1;
-		limiteMax = 480;
-		limiteMin = -20;
-
-		som = null;
-	}
-
 	public Caido(String caminho){
 
 		super(caminho);
 
 		arremessado = false;
-		aparecendo = true;
+		visible = true;
 		velocidade = 1;
 		limiteMax = 480;
 		limiteMin = -20;
@@ -57,7 +42,7 @@ public class Caido extends Camada{
 		}
 
 		if(parado){
-			aparecendo = true;
+			visible = true;
 			arremessado = true;
 			parado = false;
 		}
@@ -94,7 +79,7 @@ public class Caido extends Camada{
 		return parado;
 	}
 
-	public void setSom(SomWav som){
+	public void setSom(Sound som){
 		this.som = som;
 	}
 

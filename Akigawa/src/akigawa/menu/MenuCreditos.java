@@ -1,6 +1,6 @@
 package akigawa.menu;
 
-import br.com.etyllica.core.video.Grafico;
+import br.com.etyllica.core.graphics.Graphic;
 import br.com.etyllica.layer.ImageLayer;
 
 
@@ -31,47 +31,47 @@ public class MenuCreditos extends AkigawaBackMenu{
 	public void load(){
 
 		botaoTitulo = new ImageLayer(0,14, "gui/"+"botaocomp.png");
-		botaoTitulo.centralizaX(0,w);
+		botaoTitulo.centralizeX(0,w);
 		
 		borda = new ImageLayer(0,110, "gui/"+"borda.png");
-		borda.centralizaX(0,w);
+		borda.centralizeX(0,w);
 
 		tituloLabel = new ImageLayer(lang+"creditos.png");
-		tituloLabel.centralizaX(0,w);
-		tituloLabel.centraliza(botaoTitulo);
+		tituloLabel.centralizeX(0,w);
+		tituloLabel.centralize(botaoTitulo);
 
 		kanji = new ImageLayer("gui/kanji.png");
-		kanji.centralizaX(0,w);
+		kanji.centralizeX(0,w);
 	
 		desenhista = new ImageLayer(lang+"creditos/desenhista.png");
-		desenhista.centralizaX(0,w);
+		desenhista.centralizeX(0,w);
 		desenhista.setY(140);
 		
 		marcello = new ImageLayer(lang+"creditos/marcello.png");
-		marcello.centralizaX(0,w);
+		marcello.centralizeX(0,w);
 		marcello.setY(170);
 		
 		musicaMenu = new ImageLayer(lang+"creditos/musicamenu.png");
-        musicaMenu.centralizaX(0,w);
+        musicaMenu.centralizeX(0,w);
 		musicaMenu.setY(235);
 		
 		monster = new ImageLayer(lang+"creditos/monster.png");
-		monster.centralizaX(0,w);
+		monster.centralizeX(0,w);
 		monster.setY(265);
 		
 		desenvolvedor = new ImageLayer(lang+"creditos/desenvolvedor.png");
-		desenvolvedor.centralizaX(0,w);
+		desenvolvedor.centralizeX(0,w);
 		desenvolvedor.setY(330);
 		
 		yuri = new ImageLayer(lang+"creditos/yuri.png");
-		yuri.centralizaX(0,w);
+		yuri.centralizeX(0,w);
 		yuri.setY(360);
 		
 		loading = 100;
 		
 	}
 	
-	public void draw(Grafico g){
+	public void draw(Graphic g){
 
 		kanji.draw(g);
 		botaoTitulo.draw(g);

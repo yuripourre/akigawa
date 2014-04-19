@@ -1,14 +1,14 @@
 package akigawa.menu;
 
 
-import br.com.etyllica.core.application.DefaultLoadApplication;
-import br.com.etyllica.core.video.Grafico;
+import br.com.etyllica.context.load.DefaultLoadApplication;
+import br.com.etyllica.core.graphics.Graphic;
 import br.com.etyllica.layer.AnimatedLayer;
 import br.com.etyllica.layer.ImageLayer;
 import br.com.etyllica.layer.TextLayer;
 
 
-public class MenuCarregando extends DefaultLoadApplication{
+public class MenuCarregando extends DefaultLoadApplication {
 
 	private ImageLayer kanji;
 	private ImageLayer carregando;
@@ -30,37 +30,37 @@ public class MenuCarregando extends DefaultLoadApplication{
 	public void load(){
 		
 		kanji = new ImageLayer("gui/kanji.png");
-		kanji.centralizaX(0,w);
+		kanji.centralizeX(0,w);
 		
 		carregando = new ImageLayer(lang+"carregando.png");
-		carregando.centraliza(x, y, w, h);
+		carregando.centralize(x, y, w, h);
 
 		reticencias = new AnimatedLayer(520,220,38,12);
 		reticencias.cloneLayer("gui/carregando/3pontos.png");
 		reticencias.setAnimaEmX(true);
-		reticencias.setNumeroFrames(3);
-		reticencias.anima();
+		reticencias.setFrames(3);
+		reticencias.animate();
 		
 		bar = new ImageLayer("gui/barra.png");
-		bar.centralizaX(0,w);
+		bar.centralizeX(0,w);
 		bar.setY(320);
 		
 		barFill = new ImageLayer("gui/barrafill.png");		
-		barFill.centralizaX(0,w);
+		barFill.centralizeX(0,w);
 		barFill.setY(320);
 		//barraFill.setXImagem(400);
 		
 		porcent = new TextLayer(200,200,"666");
 		porcent.setColor(0xff,0xff,0xff);
 		porcent.setText("100%");
-		porcent.centralizaX(0,w);
+		porcent.centralizeX(0,w);
 		
 		text = new TextLayer(200,280,"Carregando Imagens");
-		text.centralizaX(0,w);
+		text.centralizeX(0,w);
 		
 	}
 
-	public void draw(Grafico g){
+	public void draw(Graphic g) {
 
 		kanji.draw(g);
 		
@@ -76,7 +76,7 @@ public class MenuCarregando extends DefaultLoadApplication{
 
 	public void setText(int andamento){
 		porcent.setText(Integer.toString(andamento)+"%");
-		porcent.centraliza(bar);
+		porcent.centralize(bar);
 		barFill.setXImage(barFill.getW()-andamento*4);
 	}
 }

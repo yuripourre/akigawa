@@ -2,28 +2,28 @@ package akigawa.vilarejo.dialogo;
 
 import java.util.ArrayList;
 
-import etyllica.camada.Camada;
-import etyllica.camada.CamadaEstatica;
+import br.com.etyllica.layer.ImageLayer;
+import br.com.etyllica.layer.StaticLayer;
 
 
 public class Falante {
 	
 	private String nome;
-	private Camada fundo;
-	private Camada aparencia;
+	private ImageLayer fundo;
+	private ImageLayer aparencia;
 	
 	private ArrayList<Pergunta> p;
 	
-	public Falante(String nome, CamadaEstatica fundo, CamadaEstatica npc){
+	public Falante(String nome, StaticLayer fundo, StaticLayer npc){
 		this.nome = nome;
 		
-		this.fundo = new Camada(0,0);
-		this.aparencia = new Camada(200,100);
+		this.fundo = new ImageLayer(0,0);
+		this.aparencia = new ImageLayer(200,100);
 		
 		p = new ArrayList<Pergunta>();
 		
-		this.fundo.igualaImagem(fundo.getCaminho());
-		this.aparencia.igualaImagem(npc.getCaminho());
+		this.fundo.cloneLayer(fundo.getPath());
+		this.aparencia.cloneLayer(npc.getPath());
 	}
 	
 	public ArrayList<Pergunta> getFalas(){
@@ -34,10 +34,10 @@ public class Falante {
 		return nome;
 	}
 	
-	public Camada getFundo(){
+	public ImageLayer getFundo(){
 		return fundo;
 	}
-	public Camada getAparencia(){
+	public ImageLayer getAparencia(){
 		return aparencia;
 	}
 	

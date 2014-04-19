@@ -1,15 +1,14 @@
 package akigawa.objetos;
 
-import etyllica.camada.Camada;
-import etyllica.camada.CamadaEstatica;
+import br.com.etyllica.layer.ImageLayer;
 
 
-public class Plataforma extends Camada{
+public class Plataforma extends ImageLayer{
 	
 	private boolean passada;
 	
-	public Plataforma(CamadaEstatica camEst){
-		super(camEst);
+	public Plataforma(String path){
+		super(path);
 		passada = false;
 	}
 

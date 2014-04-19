@@ -2,8 +2,8 @@ package akigawa.fase;
 
 import java.util.Random;
 
-import etyllica.camada.Camada;
-import etyllica.camada.CamadaEstatica;
+import br.com.etyllica.layer.ImageLayer;
+import br.com.etyllica.layer.StaticLayer;
 import etyllica.camada.Efeito;
 import etyllica.nucleo.Gerenciador;
 
@@ -22,20 +22,20 @@ public class FaseAbrigo extends Fase{
 	private Jogador[] ninja;
 	private Efeito[] efeito;
 
-	private CamadaEstatica estrelaBoa;
-	private CamadaEstatica estrelaRuim;
+	private StaticLayer estrelaBoa;
+	private StaticLayer estrelaRuim;
 
 	private Camada tronco;
 
-	private CamadaEstatica cannonballImage;
+	private StaticLayer cannonballImage;
 	private Caido cannonball[];
 	private int cannons;
 
-	private CamadaEstatica folhaImage;
+	private StaticLayer folhaImage;
 	private Caido folha[];
 	private int folhas;
 
-	private CamadaEstatica galhoImage;
+	private StaticLayer galhoImage;
 	private Caido galho[];
 	private int galhos;
 
@@ -47,6 +47,7 @@ public class FaseAbrigo extends Fase{
 	}
 	@Override
 	public void carrega() {
+		
 		fundo = new Camada(diretorioFase+"abrigo/fundo.png");
 		carregando = 15;
 		
@@ -61,9 +62,9 @@ public class FaseAbrigo extends Fase{
 		galhos = 3;
 		galho = new Caido[galhos];
 
-		estrelaBoa = new CamadaEstatica(diretorioFase+"abrigo/starfx.png");
+		estrelaBoa = new StaticLayer(diretorioFase+"abrigo/starfx.png");
 		carregando = 18;
-		estrelaRuim = new CamadaEstatica(diretorioFase+"abrigo/redstar.png");
+		estrelaRuim = new StaticLayer(diretorioFase+"abrigo/redstar.png");
 		carregando = 20;
 
 		for(int i=0;i<ninjas;i++){
@@ -88,20 +89,20 @@ public class FaseAbrigo extends Fase{
 		carregando = 35;
 
 		//Fallen Objects
-		cannonballImage = new CamadaEstatica(diretorioFase+"abrigo/cannonball.png");
+		cannonballImage = new StaticLayer(diretorioFase+"abrigo/cannonball.png");
 		carregando = 50;
 		for(int c=0;c<cannons;c++){
 			cannonball[c] = new Caido(cannonballImage);
 			cannonball[c].para();
 		}
 
-		folhaImage = new CamadaEstatica(url, diretorioFase+"abrigo/folha.png");
+		folhaImage = new StaticLayer(url, diretorioFase+"abrigo/folha.png");
 		carregando = 70;
 		for(int f=0;f<folhas;f++){
 			folha[f] = new Caido(folhaImage);
 			folha[f].para();
 		}
-		galhoImage = new CamadaEstatica(url, diretorioFase+"abrigo/galho.png");
+		galhoImage = new StaticLayer(url, diretorioFase+"abrigo/galho.png");
 		carregando = 90;
 		for(int g=0;g<galhos;g++){
 			galho[g] = new Caido(galhoImage);

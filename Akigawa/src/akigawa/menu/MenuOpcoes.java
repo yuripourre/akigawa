@@ -1,7 +1,7 @@
 package akigawa.menu;
 
 
-import br.com.etyllica.core.video.Grafico;
+import br.com.etyllica.core.graphics.Graphic;
 import br.com.etyllica.layer.ImageLayer;
 
 
@@ -22,32 +22,32 @@ public class MenuOpcoes extends AkigawaBackMenu{
 	public void load(){
 		
 		botaoTitulo = new ImageLayer(0, 14, "gui/botaocomp.png");
-		botaoTitulo.centralizaX(0,w);
+		botaoTitulo.centralizeX(0,w);
 		loading = 18;		
 
 		borda = new ImageLayer(0, 110, "gui/borda.png");
-		borda.centralizaX(0,w);
+		borda.centralizeX(0,w);
 		loading = 28;
 
 		tituloLabel = new ImageLayer(lang+"opcoes.png");
-		tituloLabel.centralizaX(0,w);
-		tituloLabel.centraliza(botaoTitulo);
+		tituloLabel.centralizeX(0,w);
+		tituloLabel.centralize(botaoTitulo);
 		
 		
 		loading = 49;
 		
 
 		kanji = new ImageLayer("gui/kanji.png");
-		kanji.centralizaX(0,w);
+		kanji.centralizeX(0,w);
 		loading = 66;
 		
 		semOpcoes = new ImageLayer(lang+"nenhumaopcao.png");
-		semOpcoes.centraliza(borda);
+		semOpcoes.centralize(borda);
 				
 		loading = 100;
 	}
 	
-	public void draw(Grafico g){
+	public void draw(Graphic g){
 
 		kanji.draw(g);
 		botaoTitulo.draw(g);

@@ -1,9 +1,10 @@
 import akigawa.menu.MenuInicial;
 import br.com.etyllica.Etyllica;
-import br.com.etyllica.core.Configuration;
-import br.com.etyllica.gui.mouse.arrow.CustomMouseArrow;
+import br.com.etyllica.context.Application;
+import br.com.etyllica.theme.ThemeManager;
+import br.com.etyllica.theme.mouse.CustomArrowTheme;
 
-public class Akigawa extends Etyllica{
+public class Akigawa extends Etyllica {
 	
 	private static final long serialVersionUID = 1L;
 
@@ -12,13 +13,18 @@ public class Akigawa extends Etyllica{
 	}
 
 	@Override
-	public void startGame() {
+	public Application startApplication() {
 		
-		Configuration.getInstance().getArrowTheme().setNormalArrow(new CustomMouseArrow("cursor.png"));
+		CustomArrowTheme akigawaArrowTheme = new CustomArrowTheme("cursor.png");
 		
-		setMainApplication(new MenuInicial(w,h));
+		ThemeManager.getInstance().setArrowTheme(akigawaArrowTheme);
+				
+		MenuInicial initialMenu = new MenuInicial(w,h); 
+		
+		initialMenu.setArrowTheme(akigawaArrowTheme);
+		
+		return initialMenu;
+		
 	}
-	
-	
 
 }

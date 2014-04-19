@@ -1,6 +1,6 @@
 package akigawa.vilarejo;
 
-import etyllica.camada.CamadaEstatica;
+import br.com.etyllica.layer.StaticLayer;
 
 
 public class Item {
@@ -15,10 +15,10 @@ public class Item {
 	private int reqQuantidade;
 	private String reqTipo;
 	
-	private CamadaEstatica miniatura;
+	private StaticLayer miniatura;
 	
 	//public Item(Objetos o){
-	public Item(Objetos o, CamadaEstatica miniatura){
+	public Item(Objetos o, StaticLayer miniatura){
 
 		this.miniatura = miniatura;
 		
@@ -52,13 +52,13 @@ public class Item {
 			reqTipo = "";		
 			break;
 		case POCAO_VIDA:
-			nome = "Poção de Vida";
+			nome = "Poï¿½ï¿½o de Vida";
 			tipo = "l";//Life
 			reqQuantidade = 0;
 			reqTipo = "";		
 			break;
 		case POCAO_ENERGIA:
-			nome = "Poção de Energia";
+			nome = "Poï¿½ï¿½o de Energia";
 			tipo = "l";//Life
 			reqQuantidade = 0;
 			reqTipo = "";		
@@ -89,7 +89,7 @@ public class Item {
 		return reqTipo;
 	}
 	
-	public CamadaEstatica getMiniatura(){
+	public StaticLayer getMiniatura(){
 		return miniatura;
 	}
 	
@@ -98,7 +98,7 @@ public class Item {
 	    KUNAI_SIMPLES,
 	    KUNAI_TREINO,
 	    KUNAI_OSSO,
-	    //Mágicos
+	    //Mï¿½gicos
 	    POCAO_VIDA,
 	    POCAO_ENERGIA;
 	}

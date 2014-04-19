@@ -2,7 +2,7 @@ package akigawa.vilarejo;
 
 import java.awt.Color;
 
-import br.com.etyllica.core.video.Grafico;
+import br.com.etyllica.core.graphics.Graphic;
 import br.com.etyllica.layer.ImageLayer;
 import br.com.etyllica.layer.TextLayer;
 
@@ -20,15 +20,15 @@ public class Boatman extends Estabelecimento{
 	}
 
 	@Override
-	public void load(){
+	public void load() {
 		fundo = new ImageLayer("npc/barqueiro.png");
 		
 		rect = new ImageLayer("fase/vilainicial/loja/shoprect.png");
-		rect.centralizaX(0,w);
+		rect.centralizeX(0,w);
 		rect.setY(10);
 
 		build = new ImageLayer("fase/vilainicial/loja/build.png");
-		build.centralizaX(0,w);
+		build.centralizeX(0,w);
 		build.setY(350);
 
 		aviso = new TextLayer(build.getX()+30,build.getY()+46,"Você ainda não pode sair desse vilarejo.");
@@ -43,11 +43,11 @@ public class Boatman extends Estabelecimento{
 	}
 	
 	@Override
-	public void back(){
+	public void back() {
 		returnApplication = new VilaInicial(w,h);
 	}
 
-	public void draw(Grafico g){
+	public void draw(Graphic g) {
 
 		fundo.draw(g);
 		rect.draw(g);

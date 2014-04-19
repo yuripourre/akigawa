@@ -4,8 +4,8 @@ import java.awt.Color;
 
 import br.com.etyllica.core.event.GUIEvent;
 import br.com.etyllica.core.event.PointerEvent;
+import br.com.etyllica.core.graphics.Graphic;
 import br.com.etyllica.core.input.mouse.MouseButton;
-import br.com.etyllica.core.video.Grafico;
 import br.com.etyllica.gui.button.ImageButton;
 import br.com.etyllica.layer.BufferedLayer;
 import br.com.etyllica.layer.ImageLayer;
@@ -51,12 +51,14 @@ public class Seamstress extends Estabelecimento{
 	private int green;
 	private int blue;
 	
+	private boolean mouseDown = false;
+	
 	public Seamstress(int w, int h, Village village) {
 		super(w,h,village);		
 	}
 	
 	@Override
-	public void load(){
+	public void load() {
 		
 		fundo = new ImageLayer("npc/rouparia.png");
 				
@@ -68,7 +70,7 @@ public class Seamstress extends Estabelecimento{
 		
 		//NinjaGlobe
 		ninjaGlobe = new ImageLayer("perfil/ninjaglobe.png");
-		ninjaGlobe.centralizaX(x,w);
+		ninjaGlobe.centralizeX(x,w);
 		ninjaGlobe.setY(40);
 		
 		//Ninja
@@ -82,13 +84,13 @@ public class Seamstress extends Estabelecimento{
 		 
 
 		kimono = new BufferedLayer("perfil/kimono.png");
-		kimono.centraliza(ninjaGlobe);
+		kimono.centralize(ninjaGlobe);
 		
 		sombra = new BufferedLayer("perfil/sombra.png");
-		sombra.centraliza(ninjaGlobe);
+		sombra.centralize(ninjaGlobe);
 		
 		pele = new ImageLayer("perfil/pele.png");
-		pele.centraliza(ninjaGlobe);
+		pele.centralize(ninjaGlobe);
 		
 		//Update Color
 		kimono.offsetRGB(red, green, blue);
@@ -101,38 +103,38 @@ public class Seamstress extends Estabelecimento{
 		
 		loading = 30;
 		barraVermelha = new ImageLayer("perfil/barrav.png");
-		barraVermelha.centralizaX(x,w);
+		barraVermelha.centralizeX(x,w);
 		barraVermelha.setY(210);
 		
 		loading = 40;
 		indicadorV = new ImageLayer("perfil/miniv.png");
-		indicadorV.centralizaY(barraVermelha);
+		indicadorV.centralizeY(barraVermelha);
 		indicadorV.setX(barraVermelha.getX()-indicadorV.getW()/2+red);		
 		
 		loading = 50;
 		barraVerde = new ImageLayer("perfil/barrad.png");
-		barraVerde.centralizaX(x,w);
+		barraVerde.centralizeX(x,w);
 		barraVerde.setY(260);
 		
 		loading = 60;
 		indicadorD = new ImageLayer("perfil/minid.png");
-		indicadorD.centralizaY(barraVerde);
+		indicadorD.centralizeY(barraVerde);
 		indicadorD.setX(barraVerde.getX()-indicadorD.getW()/2+green);
 		
 		loading = 70;
 		barraAzul = new ImageLayer("perfil/barraa.png");
-		barraAzul.centralizaX(x,w);
+		barraAzul.centralizeX(x,w);
 		barraAzul.setY(310);
 		
 		loading = 80;
 		indicadorA = new ImageLayer("perfil/minia.png");
-		indicadorA.centralizaY(barraAzul);
+		indicadorA.centralizeY(barraAzul);
 		indicadorA.setX(barraVerde.getX()-indicadorA.getW()/2+blue);
 		
 		
 		loading = 90;
 		build = new ImageLayer("fase/vilainicial/loja/build.png");
-		build.centralizaX(x,w);
+		build.centralizeX(x,w);
 		build.setY(350);
 		
 		aviso = new TextLayer(build.getX()+30,build.getY()+46,"Você pode trocar a cor da sua roupa.");
@@ -148,31 +150,36 @@ public class Seamstress extends Estabelecimento{
 		loading = 100;
 	}
 	
+	@Override
+	public void back() {
+		returnApplication = new VilaInicial(w,h);
+	}
+	
 	/*
-	public int gerencia(){
+	public int gerencia() {
 		
 		botaoVoltar.gerencia();
-		if(mouse.sobMouse(botaoVoltar)){
+		if(mouse.sobMouse(botaoVoltar)) {
 			target.setTexto("Voltar");
-			target.centralizaX(mouse);
+			target.centralizeX(mouse);
 			target.setY(mouse.getY()-30);
 			target.setAparecendo(true);
 		}
-		else if(mouse.sobMouse(botaoSalvar)){
+		else if(mouse.sobMouse(botaoSalvar)) {
 			target.setTexto("Salvar");
-			target.centralizaX(mouse);
+			target.centralizeX(mouse);
 			target.setY(mouse.getY()-30);
 			target.setAparecendo(true);
 		}
 		else{
 			target.setAparecendo(false);			
 		}
-		if(botaoVoltar.getAcionado()>0){
+		if(botaoVoltar.getAcionado()>0) {
 			return vila;
 		}
 		
 		botaoSalvar.gerencia();
-		if(botaoSalvar.getAcionado()>0){
+		if(botaoSalvar.getAcionado()>0) {
 			
 			
 			seta.mudaVermelho(red);
@@ -182,7 +189,7 @@ public class Seamstress extends Estabelecimento{
 			mouse.mudaRGB(red,green,blue);
 			
 			aviso.setTexto("As Cores foram salvas.");
-			aviso.centraliza(build);
+			aviso.centralize(build);
 			
 			p.set("red", Integer.toString(red));
 			p.set("green", Integer.toString(green));
@@ -197,7 +204,7 @@ public class Seamstress extends Estabelecimento{
 	*/
 	
 	@Override
-	public GUIEvent updateMouse(PointerEvent event){
+	public GUIEvent updateMouse(PointerEvent event) {
 		
 		updateBars(event);
 		
@@ -205,10 +212,17 @@ public class Seamstress extends Estabelecimento{
 		
 	}
 	
-	private void updateBars(PointerEvent event){
+	private void updateBars(PointerEvent event) {
 		
-		if(event.getPressed(MouseButton.MOUSE_BUTTON_LEFT)){
-			if(barraVermelha.onMouse(event)){
+		if(event.onButtonDown(MouseButton.MOUSE_BUTTON_LEFT)) {
+			mouseDown = true;
+		} else if(event.onButtonUp(MouseButton.MOUSE_BUTTON_LEFT)) {
+			mouseDown = false;
+		}
+		
+		//if(event.isKey(MouseButton.MOUSE_BUTTON_LEFT)) {
+		if(mouseDown) {
+			if(barraVermelha.onMouse(event)) {
 				indicadorV.setX(event.getX()-indicadorV.getW()/2);
 				
 				int fatorX = 1;
@@ -217,7 +231,7 @@ public class Seamstress extends Estabelecimento{
 				kimono.offsetRGB(red, green, blue);
 				sombra.offsetRGB(red/2, green/2, blue/2);
 				
-			}else if(barraVerde.onMouse(event)){
+			}else if(barraVerde.onMouse(event)) {
 				indicadorD.setX(event.getX()-indicadorD.getW()/2);
 				
 				int fatorX = 1;
@@ -226,7 +240,7 @@ public class Seamstress extends Estabelecimento{
 				kimono.offsetRGB(red, green, blue);
 				sombra.offsetRGB(red/2, green/2, blue/2);
 				
-			}else if(barraAzul.onMouse(event)){
+			}else if(barraAzul.onMouse(event)) {
 				indicadorA.setX(event.getX()-indicadorA.getW()/2);
 				
 				int fatorX = 1;
@@ -241,7 +255,7 @@ public class Seamstress extends Estabelecimento{
 	
 	
 	@Override
-	public void draw(Grafico g){
+	public void draw(Graphic g) {
 
 		fundo.draw(g);
 		ninjaGlobe.draw(g);

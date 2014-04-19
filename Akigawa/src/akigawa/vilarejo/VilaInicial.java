@@ -4,8 +4,8 @@ import java.awt.Color;
 
 import br.com.etyllica.core.event.GUIEvent;
 import br.com.etyllica.core.event.PointerEvent;
+import br.com.etyllica.core.graphics.Graphic;
 import br.com.etyllica.core.input.mouse.MouseButton;
-import br.com.etyllica.core.video.Grafico;
 import br.com.etyllica.layer.ImageLayer;
 import br.com.etyllica.layer.TextLayer;
 
@@ -36,20 +36,20 @@ public class VilaInicial extends Village{
 		background = new ImageLayer(diretorioFase+"vilainicial/vila.png");
 
 		guardLayer = new ImageLayer(diretorioFase+"vilainicial/minigatevect.png");
-		guardLayer.setCoordenadas(356,80);
+		guardLayer.setCoordinates(356,80);
 
 		//
 		boatmanLayer = new ImageLayer(diretorioFase+"vilainicial/ocasa.png");
-		boatmanLayer.setCoordenadas(170,240);
+		boatmanLayer.setCoordinates(170,240);
 
 		blacksmithLayer = new ImageLayer(diretorioFase+"vilainicial/fcasa.png");
-		blacksmithLayer.setCoordenadas(260,180);
+		blacksmithLayer.setCoordinates(260,180);
 
 		seamstressLayer = new ImageLayer(diretorioFase+"vilainicial/rcasa.png");
-		seamstressLayer.setCoordenadas(540,250);
+		seamstressLayer.setCoordinates(540,250);
 
 		alvo = new ImageLayer(diretorioFase+"vilainicial/alvo.png");
-		alvo.setCoordenadas(520,140);
+		alvo.setCoordinates(520,140);
 
 		target = new TextLayer("");
 		target.setBorder(true);
@@ -62,7 +62,7 @@ public class VilaInicial extends Village{
 
 		loading = 100;
 	}
-	public void draw (Grafico g) {
+	public void draw (Graphic g) {
 
 		background.draw(g);
 		guardLayer.draw(g);
@@ -77,37 +77,37 @@ public class VilaInicial extends Village{
 	}
 	
 	@Override
-	public GUIEvent updateMouse(PointerEvent event){
+	public GUIEvent updateMouse(PointerEvent event) {
 		
 		boolean overSomething = false;
 		
-		if(guardLayer.onMouse(event)){
+		if(guardLayer.onMouse(event)) {
 			target.setText("Guarda");
 			overSomething = true;
-		}else if(boatmanLayer.onMouse(event)){
+		}else if(boatmanLayer.onMouse(event)) {
 			
 			target.setText("Barqueiro");
 			overSomething = true;
 			
-			if(event.getPressed(MouseButton.MOUSE_BUTTON_LEFT)){
+			if(event.onButtonDown(MouseButton.MOUSE_BUTTON_LEFT)) {
 				returnApplication = boatman;
 			}
 			
-		}else if(blacksmithLayer.onMouse(event)){
+		}else if(blacksmithLayer.onMouse(event)) {
 			
 			target.setText("Ferreiro");
 			overSomething = true;
 			
-		}else if(seamstressLayer.onMouse(event)){
+		}else if(seamstressLayer.onMouse(event)) {
 			
 			target.setText("Alfaiate");
 			overSomething = true;
 			
-			if(event.getPressed(MouseButton.MOUSE_BUTTON_LEFT)){
+			if(event.onButtonDown(MouseButton.MOUSE_BUTTON_LEFT)) {
 				returnApplication = seamstress;
 			}
 			
-		}else if(alvo.onMouse(event)){
+		}else if(alvo.onMouse(event)) {
 			target.setText("Alvo");
 			overSomething = true;
 		}else{
@@ -116,8 +116,8 @@ public class VilaInicial extends Village{
 		}
 		
 		
-		if(overSomething){			
-			target.setCoordenadas(event.getX()-50, event.getY());
+		if(overSomething) {			
+			target.setCoordinates(event.getX()-50, event.getY());
 			target.setVisible(true);
 		}		
 		
