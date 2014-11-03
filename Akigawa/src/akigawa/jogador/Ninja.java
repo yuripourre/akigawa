@@ -2,29 +2,27 @@ package akigawa.jogador;
 
 import java.awt.image.BufferedImage;
 
+import br.com.etyllica.layer.AnimatedLayer;
 import br.com.etyllica.layer.BufferedLayer;
-import br.com.etyllica.layer.MovementedLayer;
 
-public class Ninja extends MovementedLayer{
+public class Ninja extends AnimatedLayer {
 
+	private BufferedLayer sombra;
+	private BufferedLayer kimono;
+	private BufferedLayer pele;
 
-	BufferedLayer sombra;
-	BufferedLayer kimono;
-	BufferedLayer pele;
+	private BufferedLayer cam;
 
-	BufferedLayer cam;
-
-	int r;
-	int g;
-	int b;
-
+	private int r;
+	private int g;
+	private int b;
 
 	public Ninja(int x, int y) {
 		super(x, y, 75, 125);
 
-		setAnimaEmX(true);
-		setNumeroFrames(5);
-		setVelocidadeAnimacao(80);
+		setAnimateHorizontally(true);
+		setFrames(5);
+		setSpeed(80);
 	}
 
 	public Ninja(int x, int y, int red, int green, int blue) {
@@ -41,33 +39,23 @@ public class Ninja extends MovementedLayer{
 
 		BufferedImage buf = new BufferedImage(375,125,BufferedImage.TYPE_INT_ARGB);
 
-		buf.getGraphics().drawImage(sombra.getImagemBuffer(),0,0,null);
-		buf.getGraphics().drawImage(kimono.getImagemBuffer(),0,0,null);
-		buf.getGraphics().drawImage(pele.getImagemBuffer(),0,0,null);
+		buf.getGraphics().drawImage(sombra.getBuffer(),0,0,null);
+		buf.getGraphics().drawImage(kimono.getBuffer(),0,0,null);
+		buf.getGraphics().drawImage(pele.getBuffer(),0,0,null);
 
-		cam = new BufferedLayer(x,y,buf);
+		cam = new BufferedLayer(x, y, buf);
 		
 		cam.setW(75);
 	}
 
-	public BufferedLayer getCamada(){
+	public BufferedLayer getLayer() {
 		return cam;
 	}
-
-	public void preAnima(){
-
-		if(!stopped){
-			if(frameAtual < numeroFrames-1){
-
-				frameAtual++;			
-			}
-			else{
-				frameAtual = 0;
-				desAnima();
-			}
-
-			cam.setXImage(xTile*frameAtual);
-		}
+	
+	@Override
+	protected void notifyFrameChangeListener(long now) {
+		super.notifyFrameChangeListener(now);
+		cam.setXImage(tileW*currentFrame);
 	}
 
 }

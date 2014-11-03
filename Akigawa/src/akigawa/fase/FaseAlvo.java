@@ -4,8 +4,11 @@ import java.awt.Color;
 
 import akigawa.armas.Arremessavel;
 import akigawa.jogador.Ninja;
-import br.com.etyllica.core.event.Tecla;
-import br.com.etyllica.core.video.Grafico;
+import br.com.etyllica.core.event.GUIEvent;
+import br.com.etyllica.core.event.KeyEvent;
+import br.com.etyllica.core.event.PointerEvent;
+import br.com.etyllica.core.graphics.Graphic;
+import br.com.etyllica.core.input.mouse.MouseButton;
 import br.com.etyllica.effects.Effect;
 import br.com.etyllica.gui.button.ImageButton;
 import br.com.etyllica.gui.label.ImageLabel;
@@ -102,14 +105,16 @@ public class FaseAlvo extends Fase{
 
 	private AnimatedLayer manivelaCima;
 	private AnimatedLayer manivelaBaixo;
-	
-	Ninja nn;
+
+	private Ninja nn;
 
 	public FaseAlvo(int w, int h) {
 		super(w, h);
 	}
+
 	@Override
-	public void load(){
+	public void load() {
+		super.load();
 
 		nomeFase = "alvo/";
 		numFacas = 10;
@@ -121,33 +126,33 @@ public class FaseAlvo extends Fase{
 		fundo = new ImageLayer(diretorioFase+nomeFase+"chao.png");
 		loading = 15;
 		alvo = new ImageLayer(diretorioFase+nomeFase+"alvo.png");
-		alvo.setCoordenadas(650, 20);
+		alvo.setCoordinates(650, 20);
 		loading = 20;
 
 
 		suporte = new ImageLayer(diretorioFase+nomeFase+"suporte.png");
-		suporte.setCoordenadas(666, 12);
+		suporte.setCoordinates(666, 12);
 		loading = 30;
-		
-		
+
+
 		manivelaCima = new AnimatedLayer(suporte.getX()+20, suporte.getY()+20, 27,30);
 		manivelaCima.setPath(diretorioFase+nomeFase+"manivela.png");
-		manivelaCima.setNumeroFrames(4);
-		manivelaCima.setAnimaEmX(false);
-		manivelaCima.setVelocidadeAnimacao(130);
+		manivelaCima.setFrames(4);
+		manivelaCima.setAnimateHorizontally(false);
+		manivelaCima.setSpeed(130);
 		loading = 40;
-		
-		
+
+
 		manivelaBaixo = new AnimatedLayer(suporte.getX()+20, suporte.getY()+suporte.getH()-40,27,30);
 		manivelaBaixo.setPath(diretorioFase+nomeFase+"manivela.png");
-		manivelaBaixo.setNumeroFrames(4);
-		manivelaBaixo.setAnimaEmX(false);
-		manivelaBaixo.setVelocidadeAnimacao(130);
+		manivelaBaixo.setFrames(4);
+		manivelaBaixo.setAnimateHorizontally(false);
+		manivelaBaixo.setSpeed(130);
 		loading = 50;
 
 		kunai = new StaticLayer(diretorioFase+"kunai.png");
 		loading = 55;
-		
+
 		miniKunai = new StaticLayer(diretorioFase+"minikunai.png");
 		loading = 60;
 
@@ -178,24 +183,28 @@ public class FaseAlvo extends Fase{
 		loading = 70;
 
 		//somArremesso = new SomWav("throw.wav");
-
 		miniFaca = new ImageLayer[numFacas][ninjas];
 		faca = new Arremessavel[numFacas][ninjas];
 		loading = 75;
+
+		sombra = new BufferedLayer("jogador/arremesso/sombra.png");
+		loading = 76;
+		sombra.offsetRGB(p.getRed()/2, p.getGreen()/2, p.getBlue()/2);
+
+		loading = 77;
 		
+		kimono = new BufferedLayer("jogador/arremesso/kimono.png");
+		kimono.offsetRGB(p.getRed(), p.getGreen(), p.getBlue());
+
+		loading = 79;
 		
-		sombra = new BufferedLayer("imagens/jogador/arremesso/sombra.png");
-		sombra.offsetRGB(p.getInt("red")/2, p.getInt("green")/2, p.getInt("blue")/2);
-		
-		kimono = new BufferedLayer("imagens/jogador/arremesso/kimono.png");
-		kimono.offsetRGB(p.getInt("red"), p.getInt("green"), p.getInt("blue"));
-		
-		pele = new BufferedLayer("imagens/jogador/arremesso/pele.png");
-		
+		pele = new BufferedLayer("jogador/arremesso/pele.png");
+		loading = 80;
+
 		nn = new Ninja(10,160);
 		//g.centralizaY(nn);
 		nn.setNinja(sombra, kimono, pele);
-		
+
 		for(int i=0;i<ninjas;i++){
 
 			//Ninjas
@@ -205,8 +214,7 @@ public class FaseAlvo extends Fase{
 			//ninja[i].setY(fundo);
 
 			botaoNome[i] = new ImageLayer("gui/botaotransp.png");
-			g.centralizaX(botaoNome[i]);
-			g.centralizaY(botaoNome[i]);
+			botaoNome[i].centralize(this);
 			//botaoNome[i].setY(20+50*i);
 			//botaoNome[i].centralizaY(nn);
 
@@ -217,11 +225,11 @@ public class FaseAlvo extends Fase{
 			nomeLabel[i] = new TextLayer(200,300,"NINJA");
 			//nomeLabel[i].setCorDifusa(20,20,20);
 			nomeLabel[i].setSize(26);
-			nomeLabel[i].centraliza(botaoNome[i]);
+			nomeLabel[i].centralize(botaoNome[i]);
 
 			efeito[i] = new Effect(alvo.getX(),nn.getY(),85,86);
-			efeito[i].setNumeroFrames(4);
-			efeito[i].setVelocidadeAnimacao(120);
+			efeito[i].setFrames(4);
+			efeito[i].setSpeed(120);
 			//efeito[i].setSom(somBatendo);
 		}
 		loading = 80;
@@ -248,20 +256,20 @@ public class FaseAlvo extends Fase{
 
 
 		ready = false;
-		
+
 		//ninja[0].carregaArremessando(getArremessando(p.getInt("red"),p.getInt("green"),p.getInt("blue")));
-		
-		nomeLabel[0].setColor(p.getInt("red"),p.getInt("green"),p.getInt("blue"));
-		nomeLabel[0].setText("NINJA");
+
+		nomeLabel[0].setColor(p.getRed(),p.getGreen(),p.getBlue());
+		nomeLabel[0].setText(p.getName());
 		loading = 88;
 		carregaRecomendacoes();
 		loading = 90;
 		carregaJogarDenovo();
 		loading = 100;
-		
+
 	}
 
-	private void recomeca(){
+	private void recomeca() {
 
 		for(int i=0;i<ninjas;i++){
 
@@ -275,15 +283,15 @@ public class FaseAlvo extends Fase{
 
 			for(int j = 0;j<numMiniFacas[i];j++){
 				faca[j][i] = new Arremessavel(kunai.getPath());
-				faca[j][i].setCoordenadas(20, nn.getY()+40);
+				faca[j][i].setCoordinates(20, nn.getY()+40);
 				faca[j][i].setVelocidade(20);
 				faca[j][i].para();
 
 				//MiniFacas
 				miniFaca[j][i] = new ImageLayer(miniKunai.getPath());
 				miniFaca[j][i].setX(botaoNome[i].getX()+10+(10*j));
-				//miniFaca[j][i].centralizaY(botaoNome[i]);
-				miniFaca[j][i].centralizaY(0, h);
+				//miniFaca[j][i].centralizeY(botaoNome[i]);
+				miniFaca[j][i].centralizeY(0, h);
 			}
 		}
 
@@ -298,43 +306,9 @@ public class FaseAlvo extends Fase{
 		again = false;
 	}
 
-
-	@Override
-	public int gerencia() {
+	public void update() {
 
 		if((ready)&&(!again)){
-
-			if(teclado.getTeclaOnce(Tecla.TSK_ESPACO)){
-				arremessoNinja(0);
-				nn.anima();
-			}
-			else if(teclado.getTecla(Tecla.TSK_CTRL)){
-				arremessoNinja(0);
-			}
-			else if(teclado.getTecla(Tecla.TSK_R)){
-				recomeca();
-			}
-
-			/*
-			if(teclado.getTecla(Tecla.TSK_Z)){
-				arremessoNinja(1);
-			}
-
-			if(teclado.getTecla(Tecla.TSK_X)){
-				arremessoNinja(2);
-			}
-			if(teclado.getTecla(Tecla.TSK_C)){
-				arremessoNinja(3);
-			}
-			if(teclado.getTecla(Tecla.TSK_V)){
-				arremessoNinja(4);
-			}
-			if(teclado.getTecla(Tecla.TSK_B)){
-				arremessoNinja(5);
-			}
-			 */
-
-			//else{			outra = false;	}
 
 			//Movimenta��o do Alvo em Y;
 			if(alvoSobe){
@@ -345,14 +319,15 @@ public class FaseAlvo extends Fase{
 			}
 			else{
 				alvo.setOffsetY(alvoVelocidade);
-				if(alvo.getY()>altura-alvo.getH()){
+				if(alvo.getY()>h-alvo.getH()){
 					alvoSobe = true;
 				}
 			}
 
 			for(int j=0;j<ninjas;j++){
 
-				if(nn.getParado()){
+				//TODO Move to animationFinishListener
+				if(nn.isStopped()){
 					if((!gone[j])&&(facaVez[j]<numFacas)){
 						faca[facaVez[j]][j].arremessa();
 						//Bug Fix
@@ -368,37 +343,37 @@ public class FaseAlvo extends Fase{
 					faca[i][j].gerencia();
 					if(!faca[i][j].getParado()){
 						if(faca[i][j].colideRetangular(alvo)){
-							efeito[j].anima();
+							efeito[j].animate();
 
 							if(faca[i][j].getY()<alvo.getY()+8){
 								mudaPontos(pontos[j]+1,j);
-								efeito[j].igualaImagem(ponto1.getPath());
+								efeito[j].cloneLayer(ponto1.getPath());
 							}
 							else if(faca[i][j].getY()<alvo.getY()+8+11){
 								mudaPontos(pontos[j]+2,j);
-								efeito[j].igualaImagem(ponto2.getPath());							
+								efeito[j].cloneLayer(ponto2.getPath());							
 							}
 							else if(faca[i][j].getY()<alvo.getY()+8+11+11){
 								mudaPontos(pontos[j]+3,j);
-								efeito[j].igualaImagem(ponto3.getPath());
+								efeito[j].cloneLayer(ponto3.getPath());
 							}
 							//Meio
 							else if(faca[i][j].getY()<alvo.getY()+8+11+11+19){
 								mudaPontos(pontos[j]+5,j);
-								efeito[j].igualaImagem(ponto5.getPath());
+								efeito[j].cloneLayer(ponto5.getPath());
 							}
 
 							else if(faca[i][j].getY()<alvo.getY()+30+19+11){
 								mudaPontos(pontos[j]+3,j);
-								efeito[j].igualaImagem(ponto3.getPath());			
+								efeito[j].cloneLayer(ponto3.getPath());			
 							}
 							else if(faca[i][j].getY()<alvo.getY()+60+10){
 								mudaPontos(pontos[j]+2,j);
-								efeito[j].igualaImagem(ponto2.getPath());
+								efeito[j].cloneLayer(ponto2.getPath());
 							}
 							else{
 								mudaPontos(pontos[j]+1,j);
-								efeito[j].igualaImagem(ponto1.getPath());
+								efeito[j].cloneLayer(ponto1.getPath());
 							}
 
 							faca[i][j].para();
@@ -420,39 +395,81 @@ public class FaseAlvo extends Fase{
 		else if(again){
 			//Recorde Alvo
 			int meuIndice = 0;
-			if(p.getInt("recordealvo")<pontos[meuIndice]){
+			/*if(p.getInt("recordealvo")<pontos[meuIndice]) {
 				p.set("recordealvo",pontos[meuIndice]);
 				recorde.setTexto(p.get("recordealvo"));
-			}
-		
-			return gerenciaJogarDenovo();
+			}*/
+
+			//return gerenciaJogarDenovo();
 		}
 		else{
-			gerenciaRecomendacoes();	
+			//gerenciaRecomendacoes();	
 		}
 
 
 		if(stopping==ninjas*numFacas){
 			again = true;
-		}
+		}		
 
-		return id;
 	}
 
+
 	@Override
-	public void draw(Grafico g) {
+	public GUIEvent updateKeyboard(KeyEvent event) {
+
+		if((ready)&&(!again)){
+
+			if(event.isKeyDown(KeyEvent.TSK_ESPACO)) {
+				arremessoNinja(0);
+				nn.restartAnimation();
+			}
+			else if(event.isAnyKeyDown(KeyEvent.TSK_CTRL_LEFT, KeyEvent.TSK_CTRL_RIGHT)) {
+				arremessoNinja(0);
+			}
+			else if(event.isKeyDown(KeyEvent.TSK_R)) {
+				recomeca();
+			}
+		}
+		
+		if(!ready)
+			gerenciaRecomendacoes(event);
+
+		/*
+			if(teclado.getTecla(Tecla.TSK_Z)){
+				arremessoNinja(1);
+			}
+
+			if(teclado.getTecla(Tecla.TSK_X)){
+				arremessoNinja(2);
+			}
+			if(teclado.getTecla(Tecla.TSK_C)){
+				arremessoNinja(3);
+			}
+			if(teclado.getTecla(Tecla.TSK_V)){
+				arremessoNinja(4);
+			}
+			if(teclado.getTecla(Tecla.TSK_B)){
+				arremessoNinja(5);
+			}
+		 */
+
+		return GUIEvent.NONE;
+	}
+	
+	@Override
+	public void draw(Graphic g) {
 
 		fundo.draw(g);
-		
+
 		suporte.draw(g);
-		
+
 		manivelaCima.draw(g);
 		manivelaBaixo.draw(g);
-		
+
 		alvo.draw(g);
-		
+
 		//Desenha Ninja
-		nn.getCamada().draw(g);
+		nn.getLayer().draw(g);
 
 
 		for(int i=0;i<ninjas;i++){
@@ -490,39 +507,49 @@ public class FaseAlvo extends Fase{
 
 		pontosLabel[player].setSize(26);
 		pontosLabel[player].setX(550);
-		pontosLabel[player].centralizaY(botaoNome[player]);
+		pontosLabel[player].centralizeY(botaoNome[player]);
 		//FX de pontos
 	}
 
-	private void carregaRecomendacoes(){
+	private void carregaRecomendacoes() {
 
-		titulo.centralizaX(0, w);
+		titulo.centralizeX(0, w);
 		titulo.setY(26);
 
 		recomendacoes = new ImageLayer(diretorioFase+nomeFase+"init.png");
-		recomendacoes.centraliza(fundo);
+		recomendacoes.centralize(fundo);
 
 		useEspacoLabel = new ImageLayer(lang+"fase/alvo/useespaco.png");
-		useEspacoLabel.setCoordenadas(440, 120);
+		useEspacoLabel.setCoordinates(440, 120);
 		comandosLabel = new ImageLayer(lang+"fase/alvo/comandos.png");
-		comandosLabel.setCoordenadas(190, 84);
+		comandosLabel.setCoordinates(190, 84);
 		municaoLabel = new ImageLayer(lang+"fase/alvo/municao.png");
-		municaoLabel.setCoordenadas(118,262);
+		municaoLabel.setCoordinates(118,262);
 		pontuacaoLabel = new ImageLayer(lang+"fase/alvo/pontuacao.png");
-		pontuacaoLabel.setCoordenadas(554,204);
+		pontuacaoLabel.setCoordinates(554,204);
 		pontosAcumuladosLabel = new ImageLayer(lang+"fase/alvo/pontosacumulados.png");
-		pontosAcumuladosLabel.setCoordenadas(292, 282);
+		pontosAcumuladosLabel.setCoordinates(292, 282);
 
 	}
-	private void gerenciaRecomendacoes(){
-		if(teclado.getTecla(Tecla.TSK_ENTER)||(mouse.getPressionado()==1)){
+	
+	private void gerenciaRecomendacoes(PointerEvent event) {
+		if(event.isButtonDown(MouseButton.MOUSE_BUTTON_LEFT)) {
 			ready = true;
-			
-			manivelaCima.anima();
-			manivelaBaixo.anima();
+
+			manivelaCima.animate();
+			manivelaBaixo.animate();
 		}
 	}
-	private void desenhaRecomendacoes(Grafico g){
+	
+	private void gerenciaRecomendacoes(KeyEvent event) {
+		if(event.isKeyDown(KeyEvent.TSK_ENTER)){
+			ready = true;
+
+			manivelaCima.animate();
+			manivelaBaixo.animate();
+		}
+	}
+	private void desenhaRecomendacoes(Graphic g){
 		recomendacoes.draw(g);
 		titulo.draw(g);
 		useEspacoLabel.draw(g);
@@ -535,32 +562,33 @@ public class FaseAlvo extends Fase{
 	private void carregaJogarDenovo(){
 
 		borda = new ImageLayer("gui/bordafase.png");
-		g.centralizaX(borda);
-		
+		borda.centralizeX(this);
+
 
 		jogarNovamente = new ImageLayer(lang+"novamente.png");
-		g.centralizaX(jogarNovamente);
+		jogarNovamente.centralizeX(this);
 		jogarNovamente.setY(270);
-		
+
 		novoRecorde = new TextLayer("");
 		novoRecorde.setSize(32);
-		novoRecorde.setColor(new Color(p.getInt("red"),p.getInt("green"),p.getInt("blue")));
-		
-		if(pontos[0]>p.getInt("recordealvo"))
+		novoRecorde.setColor(new Color(p.getRed(),p.getGreen(),p.getBlue()));
+
+		/*if(pontos[0]>p.getInt("recordealvo"))
 			novoRecorde.setText("Seu novo recorde: ");
 		else
-			novoRecorde.setText("Seu recorde: ");
-		
-		g.centralizaX(novoRecorde);
+			novoRecorde.setText("Seu recorde: ");*/
+
+		novoRecorde.centralizeX(this);
 		novoRecorde.setY(120);
-	
+
 		recorde = new TextLayer("");
 		recorde.setSize(38);
-		recorde.setColor(new Color(p.getInt("red"),p.getInt("green"),p.getInt("blue")));
-		recorde.setTexto(p.get("recordealvo"));
-		recorde.centralizaX(0, w);
+		recorde.setColor(new Color(p.getRed(),p.getGreen(),p.getBlue()));
+		//recorde.setTexto(p.get("recordealvo"));
+		recorde.setText("recordealvo");
+		recorde.centralizeX(0, w);
 		recorde.setY(novoRecorde.getY()+40);
-		
+
 
 		simLabel = new ImageLabel(lang+"sim.png");
 		naoLabel = new ImageLabel(lang+"nao.png");
@@ -582,19 +610,21 @@ public class FaseAlvo extends Fase{
 	}
 	private int gerenciaJogarDenovo(){
 
-		sim.gerencia();
+		/*sim.gerencia();
 		nao.gerencia();
 
 		if(sim.getAcionado()>0){
 			recomeca();
-			return id;
+			nextApplication = new FaseAlvo(w, h);
 		}
 		else if(nao.getAcionado()>0){
 			return 10;
-		}		
+		}*/		
+		
+		return 0;
 
 	}
-	private void desenhaJogarDenovo(Grafico g){
+	private void desenhaJogarDenovo(Graphic g){
 
 		borda.draw(g);
 		titulo.draw(g);	
@@ -603,11 +633,10 @@ public class FaseAlvo extends Fase{
 		recorde.draw(g);
 
 		//Bot�es
-		sim.desenha();
-		nao.desenha();
+		sim.draw(g);
+		nao.draw(g);
 
 	}
-
 
 	private void arremessoNinja(int player){
 

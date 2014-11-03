@@ -13,6 +13,6 @@ public abstract class Estabelecimento extends AkigawaBackMenu{
 	}
 	
 	public void back(){
-		returnApplication = village;
+		nextApplication = village;
 	}
 }

@@ -1,10 +1,7 @@
 package akigawa.objetos;
 
-
+import sound.model.Sound;
 import br.com.etyllica.layer.ImageLayer;
-import br.com.etyllica.multimedia.Sound;
-
-
 
 public class Caido extends ImageLayer{
 	private Sound som;

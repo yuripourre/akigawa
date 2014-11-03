@@ -1,6 +1,7 @@
 package akigawa.menu;
 
 
+import akigawa.Defaults;
 import akigawa.model.Profile;
 import br.com.etyllica.context.Application;
 import br.com.etyllica.core.event.GUIEvent;
@@ -11,20 +12,24 @@ import br.com.etyllica.theme.mouse.CustomArrowTheme;
 
 public abstract class MenuAkigawa extends Application {
 	
-	protected CustomArrowTheme arrowTheme;
 	//Common Resources
 	protected String lang;
 	
-	protected Profile p;
+	protected Profile p;	
 	
 	public MenuAkigawa(int w, int h){
 		super(w,h);
 		lang = "lang/br/";
-		
-		//loadApplication = new MenuCarregando(w, h);
-		//p = (Profile) sessionMap.get("PROFILE");
 	}
 
+	public void load() {
+		p = (Profile) session.get(Defaults.PARAM_PROFILE);
+		
+		if(p == null) {
+			p = new Profile();
+			session.put(Defaults.PARAM_PROFILE, p);
+		}
+	}
 
 	@Override
 	public GUIEvent updateKeyboard(KeyEvent event) {
@@ -38,16 +43,5 @@ public abstract class MenuAkigawa extends Application {
 		// TODO Auto-generated method stub
 		return GUIEvent.NONE;
 	}
-
-
-	public CustomArrowTheme getArrowTheme() {
-		return arrowTheme;
-	}
-
-	public void setArrowTheme(CustomArrowTheme arrowTheme) {
-		this.arrowTheme = arrowTheme;
-	}
 		
 }
-		
-

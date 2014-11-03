@@ -2,11 +2,14 @@ package akigawa.fase;
 
 import java.util.Random;
 
+import br.com.etyllica.core.event.GUIEvent;
+import br.com.etyllica.core.event.KeyEvent;
+import br.com.etyllica.core.graphics.Graphic;
+import br.com.etyllica.effects.Effect;
 import br.com.etyllica.layer.ImageLayer;
 import br.com.etyllica.layer.StaticLayer;
 import etyllica.camada.Efeito;
 import etyllica.nucleo.Gerenciador;
-
 import akigawa.GerenciadorAkigawa;
 import akigawa.objetos.Caido;
 import akigawa.jogador.Jogador;
@@ -16,16 +19,16 @@ import akigawa.jogador.Jogador.Direcao;
 
 public class FaseAbrigo extends Fase{
 
-	private Camada fundo;
+	private ImageLayer fundo;
 
 	private int ninjas = 1;
 	private Jogador[] ninja;
-	private Efeito[] efeito;
+	private Effect[] efeito;
 
 	private StaticLayer estrelaBoa;
 	private StaticLayer estrelaRuim;
 
-	private Camada tronco;
+	private ImageLayer tronco;
 
 	private StaticLayer cannonballImage;
 	private Caido cannonball[];
@@ -40,19 +43,17 @@ public class FaseAbrigo extends Fase{
 	private int galhos;
 
 
-	public FaseAbrigo(Gerenciador app, int id) {
-		super(app, id);
-		
-		//carrega();		
+	public FaseAbrigo(int w, int h) {
+		super(w, h);				
 	}
 	@Override
-	public void carrega() {
+	public void load() {
 		
-		fundo = new Camada(diretorioFase+"abrigo/fundo.png");
-		carregando = 15;
+		fundo = new ImageLayer(diretorioFase+"abrigo/fundo.png");
+		loading = 15;
 		
 		ninja = new Jogador[ninjas];
-		efeito = new Efeito[ninjas];
+		efeito = new Effect[ninjas];
 
 		cannons = 8;
 		cannonball = new Caido[cannons];
@@ -63,9 +64,9 @@ public class FaseAbrigo extends Fase{
 		galho = new Caido[galhos];
 
 		estrelaBoa = new StaticLayer(diretorioFase+"abrigo/starfx.png");
-		carregando = 18;
+		loading = 18;
 		estrelaRuim = new StaticLayer(diretorioFase+"abrigo/redstar.png");
-		carregando = 20;
+		loading = 20;
 
 		for(int i=0;i<ninjas;i++){
 			ninja[i] = new Jogador(64+64*i,270,75,125);
@@ -77,67 +78,68 @@ public class FaseAbrigo extends Fase{
 			//esse getCorrendo precisa ficar em uma SessaoAkigawa/Fase
 			ninja[i].carregaCorrendo(app.getCorrendo(r.nextInt(200),g.nextInt(20),b.nextInt(200)));
 
-			efeito[i] = new Efeito(0,0,86,88);
-			efeito[i].setAnimaEmX(true);
-			efeito[i].setNumeroFrames(4);
-			efeito[i].setVelocidadeAnimacao(120);
+			efeito[i] = new Effect(0,0,86,88);
+			efeito[i].setAnimateHorizontally(true);
+			efeito[i].setFrames(4);
+			efeito[i].setSpeed(120);
 
 		}
-		carregando = 25;
+		loading = 25;
 
-		tronco = new Camada(378,245, diretorioFase+"abrigo/rect.png");
-		carregando = 35;
+		tronco = new ImageLayer(378,245, diretorioFase+"abrigo/rect.png");
+		loading = 35;
 
 		//Fallen Objects
 		cannonballImage = new StaticLayer(diretorioFase+"abrigo/cannonball.png");
-		carregando = 50;
+		loading = 50;
 		for(int c=0;c<cannons;c++){
 			cannonball[c] = new Caido(cannonballImage);
 			cannonball[c].para();
 		}
 
 		folhaImage = new StaticLayer(url, diretorioFase+"abrigo/folha.png");
-		carregando = 70;
+		loading = 70;
 		for(int f=0;f<folhas;f++){
 			folha[f] = new Caido(folhaImage);
 			folha[f].para();
 		}
 		galhoImage = new StaticLayer(url, diretorioFase+"abrigo/galho.png");
-		carregando = 90;
+		loading = 90;
 		for(int g=0;g<galhos;g++){
 			galho[g] = new Caido(galhoImage);
 			galho[g].para();
 		}
-		carregando = 100;
+		loading = 100;
 	}
 
-	public void desenha(){
-		app.desenha(fundo);
+	public void draw(Graphic g) {
+		fundo.draw(g);
 
 		for(int i=0;i<ninjas;i++){
 			//app.desenha(ninja[i].getSombra());
 			//app.desenha(ninja[i].getKimono());
-			app.desenha(ninja[i].getPele());
+			ninja[i].getSombra().draw(g);
+			ninja[i].getKimono().draw(g);
+			ninja[i].getPele().draw(g);
 
-			app.desenha(efeito[i]);
+			efeito[i].draw(g);
 		}
 		
 		//app.desenha(tronco);
 
 		for(int c=0;c<cannons;c++){
-			app.desenha(cannonball[c]);
+			cannonball[c].draw(g);
 		}
 		for(int f=0;f<folhas;f++){
-			app.desenha(folha[f]);
+			folha[f].draw(g);	
 		}
-		for(int g=0;g<galhos;g++){
-			app.desenha(galho[g]);
+		for(int b = 0; b < galhos; b++) {
+			galho[b].draw(g);
 		}
-
 
 	}
 
-	public int gerencia(){
+	public GUIEvent updateKeyboard(KeyEvent event){
 
 		if(teclado.getTecla(Tecla.TSK_D)){
 			ninja[0].direciona(Direcao.LESTE);
@@ -185,7 +187,7 @@ public class FaseAbrigo extends Fase{
 					//Estrela Ruim
 
 					efeito[i].setCoordenadas(ninja[i].getX(), ninja[i].getY()-70);
-					efeito[i].igualaImagem(estrelaRuim);
+					efeito[i].copy(estrelaRuim);
 					efeito[i].anima();
 					cannonball[c].para();
 				}
@@ -206,7 +208,7 @@ public class FaseAbrigo extends Fase{
 					//Estrela boa
 
 					efeito[i].setCoordenadas(ninja[i].getX(), ninja[i].getY()-70);
-					efeito[i].igualaImagem(estrelaBoa);
+					efeito[i].copy(estrelaBoa);
 					efeito[i].anima();
 					folha[f].para();
 				}
@@ -227,7 +229,7 @@ public class FaseAbrigo extends Fase{
 					//Estrela boa
 
 					efeito[i].setCoordenadas(ninja[i].getX(), ninja[i].getY()-70);
-					efeito[i].igualaImagem(estrelaBoa);
+					efeito[i].copy(estrelaBoa);
 					efeito[i].anima();
 					galho[g].para();
 				}

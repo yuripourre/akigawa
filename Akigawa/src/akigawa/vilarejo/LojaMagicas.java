@@ -201,7 +201,7 @@ public class LojaMagicas extends Fase {
 		botaoVoltar.gerencia();
 		
 		if(botaoVoltar.getAcionado()>0){
-			returnApplication = new VilaInicial(w, h);//Vila Inicial
+			nextApplication = new VilaInicial(w, h);//Vila Inicial
 		}
 
 	}

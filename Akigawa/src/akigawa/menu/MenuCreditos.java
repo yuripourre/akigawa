@@ -4,13 +4,12 @@ import br.com.etyllica.core.graphics.Graphic;
 import br.com.etyllica.layer.ImageLayer;
 
 
-public class MenuCreditos extends AkigawaBackMenu{
+public class MenuCreditos extends AkigawaBackMenu {
 
 	private ImageLayer kanji;
 	private ImageLayer botaoTitulo;
 	private ImageLayer tituloLabel;
 	private ImageLayer borda;
-
 	
 	//Musica music = new Musica();
 	
@@ -28,7 +27,8 @@ public class MenuCreditos extends AkigawaBackMenu{
 		super(w,h);
 	}
 
-	public void load(){
+	public void load() {
+		super.load();
 
 		botaoTitulo = new ImageLayer(0,14, "gui/"+"botaocomp.png");
 		botaoTitulo.centralizeX(0,w);

@@ -14,7 +14,6 @@ public class MenuCarregando extends DefaultLoadApplication {
 	private ImageLayer carregando;
 	private AnimatedLayer reticencias;
 	
-	
 	private ImageLayer bar;
 	private ImageLayer barFill;
 	
@@ -37,7 +36,7 @@ public class MenuCarregando extends DefaultLoadApplication {
 
 		reticencias = new AnimatedLayer(520,220,38,12);
 		reticencias.cloneLayer("gui/carregando/3pontos.png");
-		reticencias.setAnimaEmX(true);
+		reticencias.setAnimateHorizontally(true);
 		reticencias.setFrames(3);
 		reticencias.animate();
 		
@@ -75,8 +74,18 @@ public class MenuCarregando extends DefaultLoadApplication {
 	}
 
 	public void setText(int andamento){
-		porcent.setText(Integer.toString(andamento)+"%");
+		
+	}
+
+	@Override
+	public void onChangeText(String phrase) {
+		this.text.setText(phrase);
+	}
+
+	@Override
+	public void onChangeLoad(float load) {
+		porcent.setText(Float.toString(load)+"%");
 		porcent.centralize(bar);
-		barFill.setXImage(barFill.getW()-andamento*4);
+		barFill.setW(barFill.getW()-(int)load*4);
 	}
 }

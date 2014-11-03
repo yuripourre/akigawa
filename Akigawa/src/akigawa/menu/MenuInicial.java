@@ -34,7 +34,8 @@ public class MenuInicial extends MenuAkigawa {
 		super(w,h);
 	}
 
-	public void load(){
+	public void load() {
+		super.load();
 
 		titulo = new ImageLayer(0,10,lang+"titulo.png");
 		titulo.centralizeX(0, w);
@@ -63,12 +64,13 @@ public class MenuInicial extends MenuAkigawa {
 		
 		int alturaBotao = 185;
 
-		for(int i=0;i<numeroBotoes;i++)
-		{			
+		for(int i=0;i<numeroBotoes;i++) {
+			
 			botao[i] = new ImageButton(w/2-412/2,alturaBotao+80*i,botaoNormal,botaoOnm);
 			
 			add(botao[i]);
 		}
+		
 		loading = 80;
 
 		botao[0].setLabel(jogarLabel);
@@ -86,15 +88,15 @@ public class MenuInicial extends MenuAkigawa {
 	}
 	
 	public void showPlay(){
-		this.returnApplication = new VilaInicial(w,h);
+		this.nextApplication = new VilaInicial(w,h);
 	}
 	
 	public void showOptions(){
-		this.returnApplication = new MenuOpcoes(w,h);
+		this.nextApplication = new MenuOpcoes(w,h);
 	}
 	
 	public void showCredits() {
-		this.returnApplication = new MenuCreditos(w,h);
+		this.nextApplication = new MenuCreditos(w,h);
 	}
 
 	public void draw(Graphic g) {

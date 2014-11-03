@@ -21,6 +21,8 @@ public class Boatman extends Estabelecimento{
 
 	@Override
 	public void load() {
+		super.load();
+		
 		fundo = new ImageLayer("npc/barqueiro.png");
 		
 		rect = new ImageLayer("fase/vilainicial/loja/shoprect.png");
@@ -44,7 +46,7 @@ public class Boatman extends Estabelecimento{
 	
 	@Override
 	public void back() {
-		returnApplication = new VilaInicial(w,h);
+		nextApplication = new VilaInicial(w,h);
 	}
 
 	public void draw(Graphic g) {

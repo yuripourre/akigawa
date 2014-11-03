@@ -81,7 +81,7 @@ public class LojaArmas extends Estabelecimento{
 		g.centralizaX(build);
 		build.setY(350);
 
-		building = new CamadaTexto(0,0,"Não há nada sendo construído");
+		building = new CamadaTexto(0,0,"Nï¿½o hï¿½ nada sendo construï¿½do");
 		building.setCorDifusa(0xff,0xff,0xff);
 		building.setTamanhoFonte(22);
 		building.centraliza(build);
@@ -194,7 +194,7 @@ public class LojaArmas extends Estabelecimento{
 
 
 
-		miniatura[a].igualaImagem(estoque.get(itm).getMiniatura().getCaminho());
+		miniatura[a].copy(estoque.get(itm).getMiniatura().getCaminho());
 		miniatura[a].centralizaX(vender[a]);
 		miniatura[a].setY(vender[a].getY()+86);
 	}
@@ -247,7 +247,7 @@ public class LojaArmas extends Estabelecimento{
 					else if("pontos".equalsIgnoreCase(reqTipo)){
 						//building
 						if(p.getInt("recordealvo")<reqQuantidade){
-							building.setTexto("Você precisa de "+reqQuantidade+" pontos no Tiro ao Alvo.");
+							building.setTexto("Vocï¿½ precisa de "+reqQuantidade+" pontos no Tiro ao Alvo.");
 						}
 						else{
 							adquire = true;
@@ -260,12 +260,12 @@ public class LojaArmas extends Estabelecimento{
 						//if(p.getRecordeAlvo()<quantidade)
 						int quantOssos = p.getInt(reqTipo);
 						if(quantOssos==0)
-							building.setTexto("Você precisa de "+reqQuantidade+" "+reqTipo+" mas não tem nenhum.");
+							building.setTexto("Vocï¿½ precisa de "+reqQuantidade+" "+reqTipo+" mas nï¿½o tem nenhum.");
 						else if(quantOssos<reqQuantidade)
-							building.setTexto("Você precisa de "+reqQuantidade+" "+reqTipo+" mas só tem "+quantOssos+".");
+							building.setTexto("Vocï¿½ precisa de "+reqQuantidade+" "+reqTipo+" mas sï¿½ tem "+quantOssos+".");
 						else{
 							p.set(reqTipo, quantOssos-reqQuantidade);
-							building.setTexto("Você acaba de adquirir "+item.getQuantidade()+" "+item.getNomePlural());
+							building.setTexto("Vocï¿½ acaba de adquirir "+item.getQuantidade()+" "+item.getNomePlural());
 						}
 
 					}
@@ -275,12 +275,12 @@ public class LojaArmas extends Estabelecimento{
 							p.set(item.getNome(), item.getQuantidade()+p.getInt(item.getNome()));
 
 							if(item.getQuantidade()>0)
-								building.setTexto("Você acaba de adquirir "+item.getQuantidade()+" "+item.getNomePlural()+".");
+								building.setTexto("Vocï¿½ acaba de adquirir "+item.getQuantidade()+" "+item.getNomePlural()+".");
 							else
-								building.setTexto("Você acaba de adquirir "+item.getNomePlural()+".");
+								building.setTexto("Vocï¿½ acaba de adquirir "+item.getNomePlural()+".");
 						}
 						else{
-							building.setTexto("Você já tem "+item.getNomePlural()+" demais.");
+							building.setTexto("Vocï¿½ jï¿½ tem "+item.getNomePlural()+" demais.");
 						}
 					}
 
@@ -298,7 +298,7 @@ public class LojaArmas extends Estabelecimento{
 			miniBotoes[i].gerencia();
 		}
 		if(miniBotoes[1].getAcionado()>0){
-			building.setTexto("Você ainda não pode usar Shurikens");
+			building.setTexto("Vocï¿½ ainda nï¿½o pode usar Shurikens");
 			building.centraliza(build);
 		}
 

@@ -97,7 +97,7 @@ public class FaseLenha extends Fase{
 	@Override
 	public int gerencia() {
 
-		if(teclado.getTecla(Tecla.TSK_ESPAÇO)){
+		if(teclado.getTecla(Tecla.TSK_ESPAï¿½O)){
 				ninja[0].animaOnce();
 				ninja[0].anima();
 				

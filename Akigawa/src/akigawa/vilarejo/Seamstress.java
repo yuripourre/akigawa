@@ -2,6 +2,7 @@ package akigawa.vilarejo;
 
 import java.awt.Color;
 
+import br.com.etyllica.core.event.Action;
 import br.com.etyllica.core.event.GUIEvent;
 import br.com.etyllica.core.event.PointerEvent;
 import br.com.etyllica.core.graphics.Graphic;
@@ -21,7 +22,6 @@ public class Seamstress extends Estabelecimento{
 	private StaticLayer salvar;
 	private StaticLayer salvarOnm;
 	
-	//private Camada ninjaGlobe;
 	private ImageLayer ninjaGlobe;
 	
 	//Ninja
@@ -59,6 +59,7 @@ public class Seamstress extends Estabelecimento{
 	
 	@Override
 	public void load() {
+		super.load();
 		
 		fundo = new ImageLayer("npc/rouparia.png");
 				
@@ -66,6 +67,7 @@ public class Seamstress extends Estabelecimento{
 		salvarOnm = new StaticLayer("gui/salvarminionm.png");
 		
 		botaoSalvar = new ImageButton(w-72-10,350,salvar,salvarOnm);
+		botaoSalvar.addAction(GUIEvent.MOUSE_LEFT_BUTTON_UP, new Action(this, "saveColor"));
 		add(botaoSalvar);
 		
 		//NinjaGlobe
@@ -74,14 +76,9 @@ public class Seamstress extends Estabelecimento{
 		ninjaGlobe.setY(40);
 		
 		//Ninja
-		/*red = Integer.parseInt(p.get("red"));
-		green = Integer.parseInt(p.get("green"));
-		blue = Integer.parseInt(p.get("blue"));*/
-		
-		red = 200;
-		green = 0; 
-		blue = 0;
-		 
+		red = p.getRed();
+		green = p.getGreen();
+		blue = p.getBlue();		
 
 		kimono = new BufferedLayer("perfil/kimono.png");
 		kimono.centralize(ninjaGlobe);
@@ -152,7 +149,21 @@ public class Seamstress extends Estabelecimento{
 	
 	@Override
 	public void back() {
-		returnApplication = new VilaInicial(w,h);
+		nextApplication = new VilaInicial(w,h);
+	}
+	
+	public void saveColor() {
+		
+		seta.offsetRGB(red, green, blue);
+		
+		//mouse.mudaRGB(red,green,blue);
+		//aviso.setTexto("As Cores foram salvas.");
+		//aviso.centralize(build);
+		
+		p.setRed(red);
+		p.setGreen(green);
+		p.setBlue(blue);
+		
 	}
 	
 	/*
@@ -181,19 +192,7 @@ public class Seamstress extends Estabelecimento{
 		botaoSalvar.gerencia();
 		if(botaoSalvar.getAcionado()>0) {
 			
-			
-			seta.mudaVermelho(red);
-			seta.mudaAzul(blue);
-			seta.mudaVerde(green);
-			
-			mouse.mudaRGB(red,green,blue);
-			
-			aviso.setTexto("As Cores foram salvas.");
-			aviso.centralize(build);
-			
-			p.set("red", Integer.toString(red));
-			p.set("green", Integer.toString(green));
-			p.set("blue", Integer.toString(blue));
+			saveColor();
 		}
 		
 
@@ -214,9 +213,9 @@ public class Seamstress extends Estabelecimento{
 	
 	private void updateBars(PointerEvent event) {
 		
-		if(event.onButtonDown(MouseButton.MOUSE_BUTTON_LEFT)) {
+		if(event.isButtonDown(MouseButton.MOUSE_BUTTON_LEFT)) {
 			mouseDown = true;
-		} else if(event.onButtonUp(MouseButton.MOUSE_BUTTON_LEFT)) {
+		} else if(event.isButtonUp(MouseButton.MOUSE_BUTTON_LEFT)) {
 			mouseDown = false;
 		}
 		
@@ -252,8 +251,7 @@ public class Seamstress extends Estabelecimento{
 			}
 		}
 	}
-	
-	
+		
 	@Override
 	public void draw(Graphic g) {
 

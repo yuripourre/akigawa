@@ -14,15 +14,13 @@ public class Akigawa extends Etyllica {
 
 	@Override
 	public Application startApplication() {
-		
+				
 		CustomArrowTheme akigawaArrowTheme = new CustomArrowTheme("cursor.png");
 		
 		ThemeManager.getInstance().setArrowTheme(akigawaArrowTheme);
 				
 		MenuInicial initialMenu = new MenuInicial(w,h); 
-		
-		initialMenu.setArrowTheme(akigawaArrowTheme);
-		
+				
 		return initialMenu;
 		
 	}
